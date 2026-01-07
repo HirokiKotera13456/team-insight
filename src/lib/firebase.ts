@@ -18,9 +18,7 @@ const REQUIRED_ENV_VARS = [
  * 環境変数を検証し、Firebase設定オブジェクトを生成
  */
 function getFirebaseConfig() {
-  const missingVars = REQUIRED_ENV_VARS.filter(
-    (key) => !process.env[key]
-  );
+  const missingVars = REQUIRED_ENV_VARS.filter(key => !process.env[key]);
 
   if (missingVars.length > 0) {
     throw new Error(
