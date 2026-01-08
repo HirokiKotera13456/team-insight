@@ -26,7 +26,7 @@ const AppIndex: React.FC = () => {
         <Box sx={{ width: '100%' }}>
           <SectionTitle
             title="ダッシュボード"
-            subtitle="あなたの仕事の進め方の傾向を確認しましょう"
+            subtitle="あなたの傾向をチェック"
           />
 
           {loading ? (
@@ -55,10 +55,10 @@ const AppIndex: React.FC = () => {
           ) : !scores ? (
             <EmptyState
               icon={<Assessment />}
-              title="診断を開始しましょう"
-              description="12問の質問に答えて、あなたの仕事の進め方の傾向を可視化します。各質問はスライダーで直感的に回答できます。"
+              title="まずは診断してみましょう"
+              description="12問の質問に直感で答えるだけ。3分くらいで終わります。"
               action={{
-                label: '診断を開始',
+                label: '診断をはじめる',
                 onClick: () => router.push('/app/assessment'),
                 startIcon: <Assessment />,
               }}

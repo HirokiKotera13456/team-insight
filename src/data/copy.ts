@@ -1,31 +1,31 @@
 export const LOGIN_COPY = {
   title: 'TeamInsight',
-  subtitle: '仕事で迷いやすいポイントを、4つの軸で整理',
+  subtitle: '仕事の進め方、ちょっと整理してみませんか',
   description: '',
   features: [
     {
       icon: 'trendingUp',
-      title: '4軸で整理する',
-      description: '行動の速さ、判断の寄りどころ、進め方、視点。違いが出やすい4点に絞って見える化します。',
+      title: '4つの軸でサクッと整理',
+      description: '動くスピード、判断のしかた、計画の立て方、ものの見方。この4つに絞って、自分のクセを見える化。',
     },
     {
       icon: 'insights',
-      title: '自分の"ひっかかり"が分かる',
-      description: '決めるときに迷う場面や、ストレスが出やすいポイントを振り返りやすくします。',
+      title: '「なんかモヤる」の正体がわかる',
+      description: '決断で迷うとき、なぜか疲れるとき。そのパターンに気づくきっかけになります。',
     },
     {
       icon: 'checkCircle',
-      title: '答えるだけでOK',
-      description: '12問に直感で答えるだけ。あとから「なるほど」を言語化できるようにします。',
+      title: '12問、3分で完了',
+      description: '考えすぎず、直感で答えてOK。終わったら「あー、確かに」ってなるはず。',
     },
   ],
   card: {
-    title: 'まずは自分の傾向を見てみる',
-    description: 'Googleアカウントでログインして、12問に答えるところから始めます。',
-    button: 'Googleで続ける',
+    title: 'さっそく診断してみる',
+    description: 'Googleアカウントでログインしたら、すぐ始められます。',
+    button: 'Googleでログイン',
   },
   privacy: {
-    title: '保存されるデータについて',
-    description: '保存するのはスコア（0〜100）です。氏名など個人を特定する情報は最小限にします。',
+    title: 'データについて',
+    description: '保存するのはスコアだけ。個人情報は最小限しか扱いません。',
   },
 } as const;

@@ -3,7 +3,7 @@ import { getTendency, getScoreRange } from '@/constants/scores';
 
 export const getOverallSummary = (scores: AxisScores): string => {
   const avgScore = (scores.energy + scores.thinking + scores.planning + scores.vision) / 4;
-  
+
   // 各軸の傾向を判定
   const tendencies = {
     energy: getTendency(scores.energy),
@@ -18,31 +18,31 @@ export const getOverallSummary = (scores: AxisScores): string => {
 
   // バランス型が優勢
   if (balanceCount >= 3) {
-    return '全体的に、状況を見ながらバランスよく判断するタイプです。極端な判断は少なく、調整役として動く場面が多い傾向があります。';
+    return '状況を見ながらバランスよく判断するタイプ。チームでは調整役になることが多そうです。';
   }
 
   // 左寄りが優勢
   if (leftCount >= 2) {
     if (tendencies.energy === 'left' && tendencies.planning === 'left') {
-      return '慎重に情報を集め、柔軟に計画を調整しながら進めるタイプです。急ぎすぎず、リスクを見ながら進めることが多い傾向があります。';
+      return '情報を集めてから動き、状況に合わせて柔軟に調整するタイプ。リスクを見ながら着実に進めるのが得意そうです。';
     }
-    return '慎重さと柔軟さを併せ持ち、極端に偏らない仕事の進め方です。周囲の状況を確認してから判断することが多い傾向があります。';
+    return '慎重さと柔軟さを持ち合わせたタイプ。まわりの状況を確認してから動くことが多そうです。';
   }
 
   // 右寄りが優勢
   if (rightCount >= 2) {
     if (tendencies.energy === 'right' && tendencies.planning === 'right') {
-      return 'まず動いて調整し、計画を立てて進めるタイプです。スピード感と計画性を両立させ、マイルストーンを切って管理することが多い傾向があります。';
+      return 'まず動いてから調整し、計画を立てて進めるタイプ。スピードと計画性を両立させるのが得意そうです。';
     }
-    return '論理的で計画的なアプローチを重視するタイプです。データや根拠に基づいて判断し、感情よりも事実を優先することが多い傾向があります。';
+    return '論理的で計画的に進めるタイプ。データや根拠をもとに判断することが多そうです。';
   }
 
   // 平均的な傾向
   if (avgScore >= 40 && avgScore <= 60) {
-    return '全体的に、状況を見ながらバランスよく判断するタイプです。極端な判断は少なく、調整役として動く場面が多い傾向があります。';
+    return '状況を見ながらバランスよく判断するタイプ。チームでは調整役になることが多そうです。';
   }
 
-  return '慎重さと柔軟さを併せ持ち、極端に偏らない仕事の進め方です。周囲の状況を確認してから判断することが多い傾向があります。';
+  return '慎重さと柔軟さを持ち合わせたタイプ。まわりの状況を確認してから動くことが多そうです。';
 };
 
 const getTendencyLabelByRange = (
@@ -53,13 +53,13 @@ const getTendencyLabelByRange = (
     case 'left':
       switch (axis) {
         case 'energy':
-          return 'やや慎重';
+          return '石橋を叩いてから渡る派';
         case 'thinking':
-          return 'やや共感重視';
+          return '人の気持ちを大事にする派';
         case 'planning':
-          return 'やや柔軟';
+          return '臨機応変に対応する派';
         case 'vision':
-          return 'やや具体重視';
+          return '具体例から入る派';
       }
       break;
     case 'leftMiddle':
@@ -67,25 +67,25 @@ const getTendencyLabelByRange = (
     case 'rightMiddle':
       switch (axis) {
         case 'energy':
-          return '状況に応じて切り替える傾向';
+          return '状況を見て切り替える派';
         case 'thinking':
-          return '周囲を見ながら判断する傾向';
+          return 'バランスを見て判断する派';
         case 'planning':
-          return '極端に寄らず調整するタイプ';
+          return '計画と柔軟さを両立する派';
         case 'vision':
-          return '具体と抽象を使い分ける傾向';
+          return '具体と抽象を行き来する派';
       }
       break;
     case 'right':
       switch (axis) {
         case 'energy':
-          return 'やや行動派';
+          return 'まず動いてみる派';
         case 'thinking':
-          return 'やや論理重視';
+          return 'データと論理で決める派';
         case 'planning':
-          return 'やや計画重視';
+          return '計画をしっかり立てる派';
         case 'vision':
-          return 'やや抽象重視';
+          return '大きな絵から入る派';
       }
       break;
   }
@@ -105,13 +105,13 @@ const getWorkExampleByRange = (
     case 'left':
       switch (axis) {
         case 'energy':
-          return '会議では、全員の意見を聞いてから結論を出しやすい';
+          return '会議では全員の意見を聞いてから結論を出すことが多い';
         case 'thinking':
-          return 'フィードバックの際、相手の反応を見ながら伝え方を選ぶことが多い';
+          return 'フィードバックするとき、相手の反応を見ながら言い方を変える';
         case 'planning':
-          return '仕様変更が入ったとき、影響範囲を確認してから動く傾向がある';
+          return '予定変更があったら、まず影響範囲を確認してから動く';
         case 'vision':
-          return '議論では、具体例を出してから抽象的な話に移ることが多い';
+          return '説明するとき、まず具体例から入ることが多い';
       }
       break;
     case 'leftMiddle':
@@ -119,25 +119,25 @@ const getWorkExampleByRange = (
     case 'rightMiddle':
       switch (axis) {
         case 'energy':
-          return '会議では、情報が揃いかけたタイミングで判断することが多い';
+          return '情報がある程度揃ったら決断に動くことが多い';
         case 'thinking':
-          return '意見が割れたとき、納得感と根拠の両方を意識して調整する';
+          return '意見が割れたとき、納得感と根拠の両方を意識する';
         case 'planning':
-          return '計画を立てつつ、状況に応じて柔軟に変更する場面が多い';
+          return '計画は立てるけど、状況次第で柔軟に変える';
         case 'vision':
-          return '具体例と抽象概念を組み合わせて説明することが多い';
+          return '具体例と全体像を行き来しながら説明する';
       }
       break;
     case 'right':
       switch (axis) {
         case 'energy':
-          return '会議では、60%程度情報が揃った時点で方向性を決めやすい';
+          return '6割くらい情報が揃ったら、まず動いて調整する';
         case 'thinking':
-          return 'フィードバックの際、事実と論点を優先して率直に伝えることが多い';
+          return 'フィードバックは事実ベースでストレートに伝える';
         case 'planning':
-          return '計画を最初に固めて、それに沿って進めることを重視する';
+          return '最初に計画を固めて、それに沿って進めたい';
         case 'vision':
-          return '議論では、目的や原則から話を始めることが多い';
+          return '話すとき、まず目的や全体像から入ることが多い';
       }
       break;
   }

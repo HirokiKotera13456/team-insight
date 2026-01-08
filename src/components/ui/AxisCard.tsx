@@ -1,8 +1,37 @@
 import React from 'react';
-import { Card, CardContent, Typography, Box } from '@mui/material';
+import { Card, CardContent, Typography, Box, alpha } from '@mui/material';
+import { TrendingUp, Psychology, EventNote, Visibility } from '@mui/icons-material';
 import { getAxisLabel } from '@/utils/comments';
 import { getAxisTendencyLabel, getAxisWorkExample } from '@/utils/summary';
 import { AxisType } from '@/types';
+
+// 軸ごとのカラー定義とアイコン
+const axisConfig = {
+  energy: {
+    main: '#6366f1',
+    light: '#818cf8',
+    gradient: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+    icon: TrendingUp,
+  },
+  thinking: {
+    main: '#8b5cf6',
+    light: '#a78bfa',
+    gradient: 'linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)',
+    icon: Psychology,
+  },
+  planning: {
+    main: '#06b6d4',
+    light: '#22d3ee',
+    gradient: 'linear-gradient(135deg, #06b6d4 0%, #10b981 100%)',
+    icon: EventNote,
+  },
+  vision: {
+    main: '#f59e0b',
+    light: '#fbbf24',
+    gradient: 'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)',
+    icon: Visibility,
+  },
+};
 
 interface AxisCardProps {
   axis: AxisType;
@@ -14,64 +43,138 @@ export const AxisCard: React.FC<AxisCardProps> = ({ axis, score, axisName }) => 
   const tendencyLabel = getAxisTendencyLabel(axis, score);
   const workExample = getAxisWorkExample(axis, score);
   const labels = getAxisLabel(axis);
+  const config = axisConfig[axis];
+  const Icon = config.icon;
 
   return (
     <Card
       sx={{
         height: '100%',
         width: '100%',
-        transition: 'all 0.2s ease-in-out',
+        position: 'relative',
+        overflow: 'hidden',
+        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
         '&:hover': {
-          transform: 'translateY(-2px)',
-          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+          transform: 'translateY(-4px)',
+          boxShadow: `0 20px 40px ${alpha(config.main, 0.15)}`,
+        },
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '4px',
+          background: config.gradient,
         },
       }}
     >
       <CardContent sx={{ p: 3 }}>
-        <Typography variant="body2" color="text.secondary" gutterBottom>
-          {axisName}
-        </Typography>
+        {/* ヘッダー */}
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            fontWeight="600"
+            textTransform="uppercase"
+            letterSpacing={1}
+          >
+            {axisName}
+          </Typography>
+          <Box
+            sx={{
+              width: 36,
+              height: 36,
+              borderRadius: 2,
+              background: alpha(config.main, 0.1),
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Icon sx={{ color: config.main, fontSize: 18 }} />
+          </Box>
+        </Box>
+
+        {/* 傾向ラベル */}
         <Typography
           variant="h6"
           fontWeight="bold"
-          sx={{ mb: 1.5 }}
+          sx={{
+            mb: 1,
+            background: config.gradient,
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}
         >
           {tendencyLabel}
         </Typography>
+
+        {/* 仕事例 */}
         <Typography
-          variant="caption"
+          variant="body2"
           color="text.secondary"
           sx={{
-            display: 'block',
-            mb: 2,
-            lineHeight: 1.6,
-            fontStyle: 'italic',
+            mb: 2.5,
+            lineHeight: 1.7,
+            minHeight: 48,
           }}
         >
           {workExample}
         </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1, mb: 2 }}>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ fontSize: '0.75rem', opacity: 0.7 }}
+
+        {/* スコアバー */}
+        <Box sx={{ mb: 1.5 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+            <Typography variant="caption" color="text.secondary">
+              スコア
+            </Typography>
+            <Typography
+              variant="subtitle2"
+              fontWeight="bold"
+              sx={{ color: config.main }}
+            >
+              {score}
+              <Typography component="span" variant="caption" color="text.secondary" sx={{ ml: 0.5 }}>
+                / 100
+              </Typography>
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              height: 6,
+              borderRadius: 3,
+              backgroundColor: alpha(config.main, 0.1),
+              overflow: 'hidden',
+            }}
           >
-            {score}
-          </Typography>
+            <Box
+              sx={{
+                height: '100%',
+                width: `${score}%`,
+                background: config.gradient,
+                borderRadius: 3,
+                transition: 'width 0.8s ease-out',
+              }}
+            />
+          </Box>
         </Box>
+
+        {/* 軸ラベル */}
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            pt: 2,
+            pt: 1.5,
             borderTop: '1px solid',
-            borderColor: 'divider',
+            borderColor: alpha(config.main, 0.1),
           }}
         >
-          <Typography variant="caption" color="text.secondary" sx={{ opacity: 0.6 }}>
+          <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.7rem' }}>
             {labels.left}
           </Typography>
-          <Typography variant="caption" color="text.secondary" sx={{ opacity: 0.6 }}>
+          <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.7rem' }}>
             {labels.right}
           </Typography>
         </Box>

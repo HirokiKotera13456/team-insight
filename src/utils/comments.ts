@@ -6,13 +6,13 @@ const getComment = (axis: keyof AxisScores, score: number): string => {
     // 左寄り
     switch (axis) {
       case 'energy':
-        return '慎重に情報を集めてから動く傾向があります';
+        return '情報が揃ってから動くほうが安心するタイプ。じっくり考えてから決めたい。';
       case 'thinking':
-        return '人の気持ちや雰囲気を重視して判断する傾向があります';
+        return '相手の気持ちや場の雰囲気を大事にするタイプ。まわりへの配慮を忘れない。';
       case 'planning':
-        return '状況に応じて柔軟に計画を変更する傾向があります';
+        return '状況に合わせて柔軟に動くタイプ。決めすぎないほうがうまくいく。';
       case 'vision':
-        return '具体例や現実的な視点から考える傾向があります';
+        return '具体的な話から入るほうが考えやすいタイプ。現実的な視点を大切にする。';
       default:
         return '';
     }
@@ -20,13 +20,13 @@ const getComment = (axis: keyof AxisScores, score: number): string => {
     // バランス
     switch (axis) {
       case 'energy':
-        return '状況に応じて慎重さとスピードを切り替えます';
+        return '状況を見てスピードを調整するタイプ。急ぐときは急ぐ、慎重なときは慎重に。';
       case 'thinking':
-        return '感情と論理のバランスを取って判断します';
+        return '感情と論理、両方を見て判断するタイプ。バランス感覚がある。';
       case 'planning':
-        return '計画と柔軟性のバランスを保ちます';
+        return '計画は立てつつ、必要なら柔軟に変えるタイプ。ガチガチには決めない。';
       case 'vision':
-        return '具体と抽象の両方の視点を持っています';
+        return '具体と抽象、どちらの視点も使えるタイプ。話の粒度を調整できる。';
       default:
         return '';
     }
@@ -34,13 +34,13 @@ const getComment = (axis: keyof AxisScores, score: number): string => {
     // 右寄り
     switch (axis) {
       case 'energy':
-        return 'まず動いて調整する傾向があります';
+        return 'まず動いてから考えるタイプ。走りながら調整するほうが性に合う。';
       case 'thinking':
-        return '論理・事実・データを重視して判断する傾向があります';
+        return 'データや論理で判断するタイプ。感情より事実を優先したい。';
       case 'planning':
-        return '計画を立ててそれに沿って進める傾向があります';
+        return '計画を立ててから進めたいタイプ。段取りがあると安心する。';
       case 'vision':
-        return '抽象概念や長期的な視点から考える傾向があります';
+        return '大きな絵や目的から入るタイプ。全体像を押さえてから細部に行きたい。';
       default:
         return '';
     }

@@ -13,8 +13,9 @@ import {
   Snackbar,
   Alert,
   Grid,
+  alpha,
 } from '@mui/material';
-import { Google, CheckCircle, TrendingUp, Insights } from '@mui/icons-material';
+import { Google, CheckCircle, TrendingUp, Insights, ArrowForward, Security } from '@mui/icons-material';
 import { useAuth } from '@/hooks/useAuth';
 import { signInWithGoogle } from '@/lib/auth';
 import { saveUserData } from '@/lib/firestore';
@@ -59,11 +60,11 @@ const Login: React.FC = () => {
     return null;
   }
 
-  const iconMap = {
-    trendingUp: <TrendingUp />,
-    insights: <Insights />,
-    checkCircle: <CheckCircle />,
-  };
+  const featureIcons = [
+    { icon: TrendingUp, gradient: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)' },
+    { icon: Insights, gradient: 'linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)' },
+    { icon: CheckCircle, gradient: 'linear-gradient(135deg, #06b6d4 0%, #10b981 100%)' },
+  ];
 
   return (
     <Box
@@ -71,19 +72,35 @@ const Login: React.FC = () => {
         minHeight: '100vh',
         position: 'relative',
         overflow: 'hidden',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        '&::before': {
-          content: '""',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%)',
-          pointerEvents: 'none',
-        },
+        background: '#f8fafc',
       }}
     >
+      {/* 背景装飾 */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: -200,
+          right: -200,
+          width: 600,
+          height: 600,
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%)',
+          pointerEvents: 'none',
+        }}
+      />
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: -150,
+          left: -150,
+          width: 500,
+          height: 500,
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%)',
+          pointerEvents: 'none',
+        }}
+      />
+
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
         <Box
           sx={{
@@ -93,95 +110,159 @@ const Login: React.FC = () => {
             py: { xs: 4, md: 8 },
           }}
         >
-          <Grid container spacing={4} alignItems="center">
+          <Grid container spacing={{ xs: 4, md: 8 }} alignItems="center">
+            {/* 左側：説明エリア */}
             <Grid item xs={12} md={6}>
-              <Box sx={{ color: 'white', mb: { xs: 4, md: 0 } }}>
-                <Typography
-                  variant="h2"
-                  component="h1"
-                  fontWeight="bold"
-                  gutterBottom
+              <Box sx={{ mb: { xs: 4, md: 0 } }}>
+                {/* ロゴ */}
+                <Box
                   sx={{
-                    mb: 2,
-                    textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 1.5,
+                    mb: 4,
+                    px: 2,
+                    py: 1,
+                    borderRadius: 3,
+                    background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%)',
                   }}
                 >
-                  {LOGIN_COPY.title}
-                </Typography>
+                  <Box
+                    sx={{
+                      width: 32,
+                      height: 32,
+                      borderRadius: 2,
+                      background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Insights sx={{ color: '#fff', fontSize: 18 }} />
+                  </Box>
+                  <Typography
+                    variant="h6"
+                    fontWeight="bold"
+                    sx={{
+                      background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+                      backgroundClip: 'text',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                    }}
+                  >
+                    {LOGIN_COPY.title}
+                  </Typography>
+                </Box>
+
+                {/* メインコピー */}
                 <Typography
-                  variant="h5"
-                  component="h2"
+                  variant="h3"
+                  component="h1"
+                  fontWeight="bold"
                   sx={{
                     mb: 2,
-                    opacity: 0.95,
-                    fontWeight: 500,
+                    background: 'linear-gradient(135deg, #1e293b 0%, #475569 100%)',
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    lineHeight: 1.3,
                   }}
                 >
                   {LOGIN_COPY.subtitle}
                 </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    mb: 4,
-                    opacity: 0.9,
-                    lineHeight: 1.8,
-                  }}
-                >
-                  {LOGIN_COPY.description}
-                </Typography>
-                <Stack spacing={2}>
-                  {LOGIN_COPY.features.map((feature, index) => (
-                    <Box
-                      key={index}
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'flex-start',
-                        gap: 2,
-                        p: 2,
-                        borderRadius: 2,
-                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                        backdropFilter: 'blur(10px)',
-                      }}
-                    >
+
+                {/* 特徴リスト */}
+                <Stack spacing={2.5} sx={{ mt: 4 }}>
+                  {LOGIN_COPY.features.map((feature, index) => {
+                    const { icon: Icon, gradient } = featureIcons[index];
+                    return (
                       <Box
+                        key={index}
                         sx={{
-                          color: 'white',
-                          '& svg': {
-                            fontSize: 28,
+                          display: 'flex',
+                          alignItems: 'flex-start',
+                          gap: 2.5,
+                          p: 2.5,
+                          borderRadius: 3,
+                          backgroundColor: '#fff',
+                          border: '1px solid',
+                          borderColor: alpha('#6366f1', 0.1),
+                          transition: 'all 0.2s ease',
+                          '&:hover': {
+                            transform: 'translateX(4px)',
+                            boxShadow: `0 8px 24px ${alpha('#6366f1', 0.1)}`,
                           },
                         }}
                       >
-                        {iconMap[feature.icon as keyof typeof iconMap]}
+                        <Box
+                          sx={{
+                            width: 44,
+                            height: 44,
+                            borderRadius: 2.5,
+                            background: gradient,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexShrink: 0,
+                            boxShadow: `0 8px 16px ${alpha(gradient.includes('#6366f1') ? '#6366f1' : gradient.includes('#8b5cf6') ? '#8b5cf6' : '#06b6d4', 0.3)}`,
+                          }}
+                        >
+                          <Icon sx={{ color: '#fff', fontSize: 22 }} />
+                        </Box>
+                        <Box>
+                          <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ color: '#1e293b' }}>
+                            {feature.title}
+                          </Typography>
+                          <Typography variant="body2" sx={{ color: '#64748b', lineHeight: 1.7 }}>
+                            {feature.description}
+                          </Typography>
+                        </Box>
                       </Box>
-                      <Box>
-                        <Typography variant="subtitle1" component="h3" fontWeight="600" gutterBottom>
-                          {feature.title}
-                        </Typography>
-                        <Typography variant="body2" sx={{ opacity: 0.9, lineHeight: 1.7 }}>
-                          {feature.description}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  ))}
+                    );
+                  })}
                 </Stack>
               </Box>
             </Grid>
+
+            {/* 右側：ログインカード */}
             <Grid item xs={12} md={6}>
               <Card
                 sx={{
                   borderRadius: 4,
-                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  backdropFilter: 'blur(10px)',
-                  backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15)',
+                  border: '1px solid',
+                  borderColor: alpha('#6366f1', 0.1),
+                  backgroundColor: '#fff',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: '4px',
+                    background: 'linear-gradient(90deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%)',
+                  },
                 }}
               >
-                <CardContent sx={{ p: { xs: 4, md: 5 } }}>
+                <CardContent sx={{ p: { xs: 4, md: 5 }, pt: { xs: 5, md: 6 } }}>
                   <Box sx={{ textAlign: 'center', mb: 4 }}>
-                    <Typography variant="h5" component="h2" fontWeight="bold" gutterBottom>
+                    <Typography
+                      variant="h5"
+                      component="h2"
+                      fontWeight="bold"
+                      gutterBottom
+                      sx={{
+                        background: 'linear-gradient(135deg, #1e293b 0%, #475569 100%)',
+                        backgroundClip: 'text',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                      }}
+                    >
                       {LOGIN_COPY.card.title}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.7 }}>
                       {LOGIN_COPY.card.description}
                     </Typography>
                   </Box>
@@ -191,6 +272,7 @@ const Login: React.FC = () => {
                     size="large"
                     fullWidth
                     startIcon={signingIn ? <CircularProgress size={20} color="inherit" /> : <Google />}
+                    endIcon={!signingIn && <ArrowForward />}
                     onClick={handleGoogleSignIn}
                     disabled={signingIn}
                     sx={{
@@ -198,12 +280,19 @@ const Login: React.FC = () => {
                       mb: 3,
                       fontSize: '1rem',
                       fontWeight: 600,
-                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                      background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+                      boxShadow: '0 8px 24px rgba(99, 102, 241, 0.4)',
                       '&:hover': {
-                        boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                        transform: 'translateY(-1px)',
+                        background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+                        boxShadow: '0 12px 32px rgba(99, 102, 241, 0.5)',
+                        transform: 'translateY(-2px)',
+                        filter: 'brightness(1.05)',
                       },
-                      transition: 'all 0.2s ease-in-out',
+                      '&:disabled': {
+                        background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+                        opacity: 0.7,
+                      },
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     }}
                   >
                     {signingIn ? 'ログイン中...' : LOGIN_COPY.card.button}
@@ -214,13 +303,28 @@ const Login: React.FC = () => {
                       mt: 4,
                       pt: 3,
                       borderTop: '1px solid',
-                      borderColor: 'divider',
+                      borderColor: alpha('#6366f1', 0.1),
                     }}
                   >
-                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', textAlign: 'center' }}>
-                      <Box component="span" sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 1,
+                        mb: 1,
+                      }}
+                    >
+                      <Security sx={{ fontSize: 16, color: '#64748b' }} />
+                      <Typography variant="caption" fontWeight="600" color="text.secondary">
                         {LOGIN_COPY.privacy.title}
-                      </Box>
+                      </Typography>
+                    </Box>
+                    <Typography
+                      variant="caption"
+                      color="text.secondary"
+                      sx={{ display: 'block', textAlign: 'center', lineHeight: 1.6 }}
+                    >
                       {LOGIN_COPY.privacy.description}
                     </Typography>
                   </Box>
