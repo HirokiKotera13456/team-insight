@@ -8,6 +8,14 @@
 # testing
 /coverage
 
+# e2e testing
+/playwright-report/
+/test-results/
+/playwright/.cache/
+/cypress/
+/cypress/videos/
+/cypress/screenshots/
+
 # next.js
 /.next/
 /out/
