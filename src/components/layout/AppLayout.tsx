@@ -95,7 +95,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             WebkitTextFillColor: 'transparent',
           }}
         >
-          TeamInsight
+          WorkInsight
         </Typography>
       </Toolbar>
       <List sx={{ flex: 1, px: 1.5, py: 2 }}>

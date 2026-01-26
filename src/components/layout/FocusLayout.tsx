@@ -63,7 +63,7 @@ export const FocusLayout: React.FC<FocusLayoutProps> = ({
               WebkitTextFillColor: 'transparent',
             }}
           >
-            TeamInsight
+            WorkInsight
           </Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <Chip

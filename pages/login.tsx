@@ -157,7 +157,7 @@ const Login: React.FC = () => {
             gap: 4,
           }}
         >
-          {/* タイトル: team-insight with ロゴ */}
+          {/* タイトル: work-insight with ロゴ */}
           <Box
             sx={{
               display: 'flex',
@@ -218,7 +218,7 @@ const Login: React.FC = () => {
                   lineHeight: 1.2,
                 }}
               >
-                team-insight
+                work-insight
               </Typography>
             </Box>
           </Box>

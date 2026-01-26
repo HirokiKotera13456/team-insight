@@ -1,5 +1,5 @@
 export const LOGIN_COPY = {
-  title: 'TeamInsight',
+  title: 'WorkInsight',
   subtitle: '仕事の進め方、ちょっと整理してみませんか',
   description: '',
   features: [
