@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { Box, Grid, Skeleton, Alert, Stack } from '@mui/material';
+import { Box, Alert, Stack } from '@mui/material';
 import { Assessment } from '@mui/icons-material';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
@@ -14,6 +14,7 @@ import { AxisCard } from '@/components/ui/AxisCard';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { SummaryCard } from '@/components/ui/SummaryCard';
 import { NextActions } from '@/components/ui/NextActions';
+import { LoadingState } from '@/components/ui/LoadingState';
 
 const AppIndex: React.FC = () => {
   const router = useRouter();
@@ -24,31 +25,15 @@ const AppIndex: React.FC = () => {
     <ProtectedRoute>
       <AppLayout>
         <Box sx={{ width: '100%' }}>
-          <SectionTitle
-            title="ダッシュボード"
-            subtitle="あなたの傾向をチェック"
-          />
-
           {loading ? (
-            <Stack spacing={4}>
-              <Skeleton
-                variant="rectangular"
-                height={100}
-                sx={{ borderRadius: 3 }}
+            <LoadingState />
+          ) : (
+            <>
+              <SectionTitle
+                title="ダッシュボード"
+                subtitle="あなたの傾向をチェック"
               />
-              <Grid container spacing={3}>
-                {[1, 2, 3, 4].map(i => (
-                  <Grid item xs={12} sm={6} key={i}>
-                    <Skeleton
-                      variant="rectangular"
-                      height={140}
-                      sx={{ borderRadius: 3 }}
-                    />
-                  </Grid>
-                ))}
-              </Grid>
-            </Stack>
-          ) : error ? (
+              {error ? (
             <Alert severity="error" sx={{ borderRadius: 3, width: '100%' }}>
               {error}
             </Alert>
@@ -103,6 +88,8 @@ const AppIndex: React.FC = () => {
                 onReassess={() => router.push('/app/assessment')}
               />
             </Stack>
+              )}
+            </>
           )}
         </Box>
       </AppLayout>

@@ -4,8 +4,6 @@ import {
   Card,
   CardContent,
   Typography,
-  Grid,
-  Skeleton,
   Alert,
   alpha,
   Button,
@@ -43,6 +41,7 @@ import { AxisScores } from '@/types';
 import { getAxisName, getAxisLabel, getAxisComments } from '@/utils/comments';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { StatCard } from '@/components/ui/StatCard';
+import { LoadingState } from '@/components/ui/LoadingState';
 import { exportAsPDF } from '@/utils/export';
 
 // 軸ごとのカラー定義
@@ -103,17 +102,7 @@ const Result: React.FC = () => {
       <ProtectedRoute>
         <AppLayout>
           <Box sx={{ width: '100%' }}>
-            <Grid container spacing={3}>
-              {[1, 2, 3, 4].map(i => (
-                <Grid item xs={12} sm={6} key={i}>
-                  <Skeleton
-                    variant="rectangular"
-                    height={200}
-                    sx={{ borderRadius: 3 }}
-                  />
-                </Grid>
-              ))}
-            </Grid>
+            <LoadingState />
           </Box>
         </AppLayout>
       </ProtectedRoute>

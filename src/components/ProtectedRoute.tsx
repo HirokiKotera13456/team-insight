@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Box, CircularProgress, Backdrop } from '@mui/material';
+import { Box } from '@mui/material';
 import { useAuth } from '@/hooks/useAuth';
+import { LoadingState } from '@/components/ui/LoadingState';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -19,9 +20,17 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   if (loading) {
     return (
-      <Backdrop open={true} sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '100vh',
+          width: '100%',
+        }}
+      >
+        <LoadingState />
+      </Box>
     );
   }
 
