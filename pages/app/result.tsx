@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Card,
@@ -8,11 +8,17 @@ import {
   Skeleton,
   Alert,
   alpha,
+  Button,
+  ButtonGroup,
+  Snackbar,
 } from '@mui/material';
 import {
   BarChart as BarChartIcon,
   DonutLarge,
   TrendingUp,
+  Download,
+  PictureAsPdf,
+  Image,
 } from '@mui/icons-material';
 import {
   BarChart,
@@ -38,6 +44,7 @@ import { AxisScores } from '@/types';
 import { getAxisName, getAxisLabel, getAxisComments } from '@/utils/comments';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { StatCard } from '@/components/ui/StatCard';
+import { exportAsImage, exportAsPDF } from '@/utils/export';
 
 // 軸ごとのカラー定義
 const axisColors = {
@@ -79,6 +86,12 @@ const CustomTooltip: React.FC<TooltipProps<number, string>> = ({ active, payload
 const Result: React.FC = () => {
   const { user } = useAuth();
   const { scores, loading, error: scoresError } = useAxisScores(user?.uid);
+  const [exporting, setExporting] = useState(false);
+  const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: 'success' | 'error' }>({
+    open: false,
+    message: '',
+    severity: 'success',
+  });
 
   const error =
     scoresError ||
@@ -142,14 +155,58 @@ const Result: React.FC = () => {
     fullMark: 100,
   }));
 
+  const handleExportImage = async () => {
+    try {
+      setExporting(true);
+      await exportAsImage('result-export', `work-insight-result-${new Date().toISOString().split('T')[0]}.png`);
+      setSnackbar({ open: true, message: '画像として保存しました', severity: 'success' });
+    } catch (error: any) {
+      setSnackbar({ open: true, message: error.message || 'エクスポートに失敗しました', severity: 'error' });
+    } finally {
+      setExporting(false);
+    }
+  };
+
+  const handleExportPDF = async () => {
+    try {
+      setExporting(true);
+      await exportAsPDF('result-export', `work-insight-result-${new Date().toISOString().split('T')[0]}.pdf`);
+      setSnackbar({ open: true, message: 'PDFとして保存しました', severity: 'success' });
+    } catch (error: any) {
+      setSnackbar({ open: true, message: error.message || 'エクスポートに失敗しました', severity: 'error' });
+    } finally {
+      setExporting(false);
+    }
+  };
+
   return (
     <ProtectedRoute>
       <AppLayout>
         <Box sx={{ width: '100%' }}>
-          <SectionTitle
-            title="診断結果"
-            subtitle="4つの軸であなたの傾向を見える化"
-          />
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 3 }}>
+            <SectionTitle
+              title="診断結果"
+              subtitle="4つの軸であなたの傾向を見える化"
+            />
+            <ButtonGroup variant="outlined" size="small">
+              <Button
+                startIcon={<Image />}
+                onClick={handleExportImage}
+                disabled={exporting}
+              >
+                画像
+              </Button>
+              <Button
+                startIcon={<PictureAsPdf />}
+                onClick={handleExportPDF}
+                disabled={exporting}
+              >
+                PDF
+              </Button>
+            </ButtonGroup>
+          </Box>
+
+          <Box id="result-export">
 
           <Grid container spacing={3} sx={{ mb: 4, width: '100%' }}>
             {axisKeys.map(axis => {
@@ -408,7 +465,21 @@ const Result: React.FC = () => {
               </Card>
             </Grid>
           </Grid>
+          </Box>
         </Box>
+        <Snackbar
+          open={snackbar.open}
+          autoHideDuration={6000}
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        >
+          <Alert
+            severity={snackbar.severity}
+            onClose={() => setSnackbar({ ...snackbar, open: false })}
+          >
+            {snackbar.message}
+          </Alert>
+        </Snackbar>
       </AppLayout>
     </ProtectedRoute>
   );

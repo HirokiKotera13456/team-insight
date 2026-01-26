@@ -30,3 +30,9 @@ export interface AxisScoreData extends AxisScores {
   answeredAt?: any;
   version: string;
 }
+
+export interface AssessmentHistory extends AxisScores {
+  id: string;
+  answeredAt: any; // Firestore Timestamp
+  createdAt?: any;
+}

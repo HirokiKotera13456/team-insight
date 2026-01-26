@@ -5,8 +5,13 @@ service cloud.firestore {
     match /users/{uid} {
       allow read, write: if request.auth != null && request.auth.uid == uid;
       
-      // users/{uid}/axis_scores/latest - 本人のみ read/write
+      // users/{uid}/axis_scores/{scoreId} - 本人のみ read/write
       match /axis_scores/{scoreId} {
+        allow read, write: if request.auth != null && request.auth.uid == uid;
+      }
+      
+      // users/{uid}/assessment_history/{historyId} - 本人のみ read/write
+      match /assessment_history/{historyId} {
         allow read, write: if request.auth != null && request.auth.uid == uid;
       }
     }
