@@ -134,7 +134,6 @@ Work Insight は、
 * Web 画面：Next.js
 * 認証：Firebase Authentication
 * データ保存：Cloud Firestore
-* 集計処理：Cloud Functions
 
 ---
 
