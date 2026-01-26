@@ -64,6 +64,8 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             mb: { xs: 1, sm: 1.5 }, 
             lineHeight: 1.6,
             fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' },
+            wordBreak: 'break-word',
+            overflowWrap: 'break-word',
           }}
         >
           {question.text}
@@ -78,6 +80,9 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
               mb: { xs: 3, sm: 4 }, 
               opacity: 0.8,
               fontSize: { xs: '0.7rem', sm: '0.75rem' },
+              wordBreak: 'break-word',
+              overflowWrap: 'break-word',
+              whiteSpace: 'pre-wrap',
             }}
           >
             {question.context}
@@ -85,22 +90,32 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
         )}
 
         <Box sx={{ px: { xs: 1, sm: 2, md: 4 }, mb: { xs: 2, sm: 3 } }}>
+          {/* 左ラベル（上に表示） */}
+          <Box sx={{ mb: { xs: 1.5, sm: 2 }, display: 'flex', justifyContent: 'flex-start' }}>
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              sx={{
+                fontSize: { xs: '0.7rem', sm: '0.75rem' },
+                fontWeight: 500,
+                wordBreak: 'break-word',
+                overflowWrap: 'break-word',
+                whiteSpace: 'normal',
+                textAlign: 'left',
+                maxWidth: '45%',
+              }}
+            >
+              {question.shortLeftLabel || question.leftLabel}
+            </Typography>
+          </Box>
+
+          {/* スライダー */}
           <Slider
             value={value}
             onChange={(_, newValue) => onChange(typeof newValue === 'number' ? newValue : newValue[0])}
             min={0}
             max={100}
             step={1}
-            marks={[
-              {
-                value: 0,
-                label: question.shortLeftLabel || question.leftLabel,
-              },
-              {
-                value: 100,
-                label: question.shortRightLabel || question.rightLabel,
-              },
-            ]}
             valueLabelDisplay="off"
             sx={{
               '& .MuiSlider-thumb': {
@@ -126,17 +141,27 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 height: { xs: 4, sm: 6 },
                 backgroundColor: 'rgba(0, 0, 0, 0.1)',
               },
-              '& .MuiSlider-mark': {
-                backgroundColor: 'transparent',
-              },
-              '& .MuiSlider-markLabel': {
-                fontSize: { xs: '0.65rem', sm: '0.75rem' },
-                color: 'text.secondary',
-                fontWeight: 500,
-                top: { xs: 32, sm: 36 },
-              },
             }}
           />
+
+          {/* 右ラベル（下に表示） */}
+          <Box sx={{ mt: { xs: 1.5, sm: 2 }, display: 'flex', justifyContent: 'flex-end' }}>
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              sx={{
+                fontSize: { xs: '0.7rem', sm: '0.75rem' },
+                fontWeight: 500,
+                wordBreak: 'break-word',
+                overflowWrap: 'break-word',
+                whiteSpace: 'normal',
+                textAlign: 'right',
+                maxWidth: '45%',
+              }}
+            >
+              {question.shortRightLabel || question.rightLabel}
+            </Typography>
+          </Box>
         </Box>
       </CardContent>
     </Card>

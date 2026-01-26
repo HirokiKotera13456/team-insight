@@ -69,21 +69,33 @@ const AppIndex: React.FC = () => {
               <SummaryCard summary={getOverallSummary(scores)} />
 
               {/* 4軸カード */}
-              <Grid container spacing={3} sx={{ width: '100%' }}>
+              <Box
+                sx={{
+                  width: '100%',
+                  display: 'grid',
+                  gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
+                  gap: { xs: 2, sm: 3 },
+                }}
+              >
                 {(
                   ['energy', 'thinking', 'planning', 'vision'] as Array<
                     keyof AxisScores
                   >
                 ).map(axis => (
-                  <Grid item xs={12} sm={6} key={axis}>
+                  <Box
+                    key={axis}
+                    sx={{
+                      width: '100%',
+                    }}
+                  >
                     <AxisCard
                       axis={axis}
                       score={scores[axis]}
                       axisName={getAxisName(axis)}
                     />
-                  </Grid>
+                  </Box>
                 ))}
-              </Grid>
+              </Box>
 
               {/* 次にできること */}
               <NextActions

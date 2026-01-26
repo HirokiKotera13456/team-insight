@@ -18,7 +18,6 @@ import {
   TrendingUp,
   Download,
   PictureAsPdf,
-  Image,
 } from '@mui/icons-material';
 import {
   BarChart,
@@ -44,7 +43,7 @@ import { AxisScores } from '@/types';
 import { getAxisName, getAxisLabel, getAxisComments } from '@/utils/comments';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { StatCard } from '@/components/ui/StatCard';
-import { exportAsImage, exportAsPDF } from '@/utils/export';
+import { exportAsPDF } from '@/utils/export';
 
 // 軸ごとのカラー定義
 const axisColors = {
@@ -155,18 +154,6 @@ const Result: React.FC = () => {
     fullMark: 100,
   }));
 
-  const handleExportImage = async () => {
-    try {
-      setExporting(true);
-      await exportAsImage('result-export', `work-insight-result-${new Date().toISOString().split('T')[0]}.png`);
-      setSnackbar({ open: true, message: '画像として保存しました', severity: 'success' });
-    } catch (error: any) {
-      setSnackbar({ open: true, message: error.message || 'エクスポートに失敗しました', severity: 'error' });
-    } finally {
-      setExporting(false);
-    }
-  };
-
   const handleExportPDF = async () => {
     try {
       setExporting(true);
@@ -188,32 +175,37 @@ const Result: React.FC = () => {
               title="診断結果"
               subtitle="4つの軸であなたの傾向を見える化"
             />
-            <ButtonGroup variant="outlined" size="small">
-              <Button
-                startIcon={<Image />}
-                onClick={handleExportImage}
-                disabled={exporting}
-              >
-                画像
-              </Button>
-              <Button
-                startIcon={<PictureAsPdf />}
-                onClick={handleExportPDF}
-                disabled={exporting}
-              >
-                PDF
-              </Button>
-            </ButtonGroup>
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<PictureAsPdf />}
+              onClick={handleExportPDF}
+              disabled={exporting}
+            >
+              PDF出力
+            </Button>
           </Box>
 
-          <Box id="result-export">
-
-          <Grid container spacing={3} sx={{ mb: 4, width: '100%' }}>
+          <Box id="result-export" sx={{ width: '100%' }}>
+          <Box
+            sx={{
+              mb: 4,
+              width: '100%',
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
+              gap: { xs: 2, sm: 3 },
+            }}
+          >
             {axisKeys.map(axis => {
               const colors = axisColors[axis];
               const labels = getAxisLabel(axis);
               return (
-                <Grid item xs={12} sm={6} key={axis}>
+                <Box
+                  key={axis}
+                  sx={{
+                    width: '100%',
+                  }}
+                >
                   <Card
                     sx={{
                       height: '100%',
@@ -236,7 +228,7 @@ const Result: React.FC = () => {
                       },
                     }}
                   >
-                    <CardContent sx={{ p: 3 }}>
+                    <CardContent sx={{ p: { xs: 2.5, sm: 3 } }}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
                         <Typography variant="subtitle2" color="text.secondary" fontWeight="600" textTransform="uppercase" letterSpacing={1}>
                           {getAxisName(axis)}
@@ -264,10 +256,19 @@ const Result: React.FC = () => {
                           WebkitBackgroundClip: 'text',
                           WebkitTextFillColor: 'transparent',
                           mb: 1,
+                          fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
                         }}
                       >
                         {scores[axis]}
-                        <Typography component="span" variant="h6" sx={{ WebkitTextFillColor: '#94a3b8', ml: 0.5 }}>
+                        <Typography 
+                          component="span" 
+                          variant="h6" 
+                          sx={{ 
+                            WebkitTextFillColor: '#94a3b8', 
+                            ml: 0.5,
+                            fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.75rem' },
+                          }}
+                        >
                           / 100
                         </Typography>
                       </Typography>
@@ -302,16 +303,22 @@ const Result: React.FC = () => {
                       </Box>
                       <Typography
                         variant="body2"
-                        sx={{ color: 'text.secondary', lineHeight: 1.7 }}
+                        sx={{ 
+                          color: 'text.secondary', 
+                          lineHeight: 1.7,
+                          fontSize: { xs: '0.875rem', sm: '0.9375rem' },
+                          wordBreak: 'break-word',
+                          overflowWrap: 'break-word',
+                        }}
                       >
                         {comments[axis]}
                       </Typography>
                     </CardContent>
                   </Card>
-                </Grid>
+                </Box>
               );
             })}
-          </Grid>
+          </Box>
 
           <Grid container spacing={3} sx={{ width: '100%' }}>
             <Grid item xs={12} md={6}>

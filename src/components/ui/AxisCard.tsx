@@ -69,30 +69,32 @@ export const AxisCard: React.FC<AxisCardProps> = ({ axis, score, axisName }) => 
         },
       }}
     >
-      <CardContent sx={{ p: 3 }}>
+      <CardContent sx={{ p: { xs: 2.5, sm: 3 } }}>
         {/* ヘッダー */}
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: { xs: 1.5, sm: 2 } }}>
           <Typography
             variant="caption"
             color="text.secondary"
             fontWeight="600"
             textTransform="uppercase"
             letterSpacing={1}
+            sx={{ fontSize: { xs: '0.65rem', sm: '0.75rem' } }}
           >
             {axisName}
           </Typography>
           <Box
             sx={{
-              width: 36,
-              height: 36,
+              width: { xs: 32, sm: 36 },
+              height: { xs: 32, sm: 36 },
               borderRadius: 2,
               background: alpha(config.main, 0.1),
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              flexShrink: 0,
             }}
           >
-            <Icon sx={{ color: config.main, fontSize: 18 }} />
+            <Icon sx={{ color: config.main, fontSize: { xs: 16, sm: 18 } }} />
           </Box>
         </Box>
 
@@ -101,11 +103,14 @@ export const AxisCard: React.FC<AxisCardProps> = ({ axis, score, axisName }) => 
           variant="h6"
           fontWeight="bold"
           sx={{
-            mb: 1,
+            mb: { xs: 0.75, sm: 1 },
             background: config.gradient,
             backgroundClip: 'text',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
+            fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' },
+            wordBreak: 'break-word',
+            overflowWrap: 'break-word',
           }}
         >
           {tendencyLabel}
@@ -116,34 +121,52 @@ export const AxisCard: React.FC<AxisCardProps> = ({ axis, score, axisName }) => 
           variant="body2"
           color="text.secondary"
           sx={{
-            mb: 2.5,
+            mb: { xs: 2, sm: 2.5 },
             lineHeight: 1.7,
-            minHeight: 48,
+            minHeight: { xs: 40, sm: 48 },
+            fontSize: { xs: '0.8rem', sm: '0.875rem' },
+            wordBreak: 'break-word',
+            overflowWrap: 'break-word',
           }}
         >
           {workExample}
         </Typography>
 
         {/* スコアバー */}
-        <Box sx={{ mb: 1.5 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-            <Typography variant="caption" color="text.secondary">
+        <Box sx={{ mb: { xs: 1.25, sm: 1.5 } }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: { xs: 0.75, sm: 1 } }}>
+            <Typography 
+              variant="caption" 
+              color="text.secondary"
+              sx={{ fontSize: { xs: '0.7rem', sm: '0.75rem' } }}
+            >
               スコア
             </Typography>
             <Typography
               variant="subtitle2"
               fontWeight="bold"
-              sx={{ color: config.main }}
+              sx={{ 
+                color: config.main,
+                fontSize: { xs: '0.875rem', sm: '0.9375rem' },
+              }}
             >
               {score}
-              <Typography component="span" variant="caption" color="text.secondary" sx={{ ml: 0.5 }}>
+              <Typography 
+                component="span" 
+                variant="caption" 
+                color="text.secondary" 
+                sx={{ 
+                  ml: 0.5,
+                  fontSize: { xs: '0.7rem', sm: '0.75rem' },
+                }}
+              >
                 / 100
               </Typography>
             </Typography>
           </Box>
           <Box
             sx={{
-              height: 6,
+              height: { xs: 5, sm: 6 },
               borderRadius: 3,
               backgroundColor: alpha(config.main, 0.1),
               overflow: 'hidden',
@@ -166,15 +189,35 @@ export const AxisCard: React.FC<AxisCardProps> = ({ axis, score, axisName }) => 
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            pt: 1.5,
+            pt: { xs: 1.25, sm: 1.5 },
             borderTop: '1px solid',
             borderColor: alpha(config.main, 0.1),
+            gap: 1,
           }}
         >
-          <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.7rem' }}>
+          <Typography 
+            variant="caption" 
+            color="text.secondary" 
+            sx={{ 
+              fontSize: { xs: '0.65rem', sm: '0.7rem' },
+              wordBreak: 'break-word',
+              overflowWrap: 'break-word',
+              flex: 1,
+            }}
+          >
             {labels.left}
           </Typography>
-          <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.7rem' }}>
+          <Typography 
+            variant="caption" 
+            color="text.secondary" 
+            sx={{ 
+              fontSize: { xs: '0.65rem', sm: '0.7rem' },
+              wordBreak: 'break-word',
+              overflowWrap: 'break-word',
+              flex: 1,
+              textAlign: 'right',
+            }}
+          >
             {labels.right}
           </Typography>
         </Box>
