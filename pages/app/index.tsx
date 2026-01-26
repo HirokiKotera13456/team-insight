@@ -88,7 +88,6 @@ const AppIndex: React.FC = () => {
               {/* 次にできること */}
               <NextActions
                 onViewResult={() => router.push('/app/result')}
-                onCompare={() => router.push('/app/compare')}
                 onReassess={() => router.push('/app/assessment')}
               />
             </Stack>

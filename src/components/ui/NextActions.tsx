@@ -1,10 +1,9 @@
 import React from 'react';
 import { Box, Typography, Button, Card, CardContent, Grid, alpha, Chip } from '@mui/material';
-import { BarChart, CompareArrows, Assessment, ArrowForward } from '@mui/icons-material';
+import { BarChart, Assessment, ArrowForward } from '@mui/icons-material';
 
 interface NextActionsProps {
   onViewResult: () => void;
-  onCompare: () => void;
   onReassess: () => void;
 }
 
@@ -21,17 +20,6 @@ const actionCards = [
     badge: null,
   },
   {
-    key: 'compare',
-    title: '他の人と比べてみる',
-    description: 'チームメンバーとの違いがわかると、お互いの理解が深まります。',
-    icon: CompareArrows,
-    gradient: 'linear-gradient(135deg, #06b6d4 0%, #10b981 100%)',
-    buttonText: '比較する',
-    variant: 'outlined' as const,
-    disabled: true,
-    badge: '準備中',
-  },
-  {
     key: 'reassess',
     title: 'もう一度診断する',
     description: '最近ちょっと変わったかも？と思ったら、再診断してみてください。',
@@ -46,12 +34,10 @@ const actionCards = [
 
 export const NextActions: React.FC<NextActionsProps> = ({
   onViewResult,
-  onCompare,
   onReassess,
 }) => {
   const handlers: Record<string, () => void> = {
     result: onViewResult,
-    compare: onCompare,
     reassess: onReassess,
   };
 

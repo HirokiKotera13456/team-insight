@@ -28,7 +28,6 @@ import {
   Dashboard as DashboardIcon,
   Assessment as AssessmentIcon,
   BarChart as BarChartIcon,
-  CompareArrows as CompareIcon,
   AccountCircle,
   Logout,
 } from '@mui/icons-material';
@@ -72,7 +71,6 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     { text: 'ダッシュボード', icon: <DashboardIcon />, path: '/app' },
     { text: '診断', icon: <AssessmentIcon />, path: '/app/assessment' },
     { text: '結果', icon: <BarChartIcon />, path: '/app/result' },
-    { text: '比較', icon: <CompareIcon />, path: '/app/compare' },
   ];
 
   const drawer = (
