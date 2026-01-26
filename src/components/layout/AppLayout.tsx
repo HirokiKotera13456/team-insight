@@ -77,27 +77,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
 
   const drawer = (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <Toolbar
-        sx={{
-          px: 3,
-          py: 2,
-          borderBottom: '1px solid',
-          borderColor: 'divider',
-        }}
-      >
-        <Typography
-          variant="h6"
-          component="div"
-          fontWeight="bold"
-          sx={{
-            background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-          }}
-        >
-          WorkInsight
-        </Typography>
-      </Toolbar>
+
       <List sx={{ flex: 1, px: 1.5, py: 2 }}>
         {navigationItems.map((item) => {
           const isSelected = router.pathname === item.path || 

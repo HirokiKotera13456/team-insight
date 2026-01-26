@@ -9,6 +9,7 @@ import {
   Button,
   ButtonGroup,
   Snackbar,
+  Grid,
 } from '@mui/material';
 import {
   BarChart as BarChartIcon,
@@ -170,6 +171,13 @@ const Result: React.FC = () => {
               startIcon={<PictureAsPdf />}
               onClick={handleExportPDF}
               disabled={exporting}
+              sx={{
+                width: { xs: 'auto', sm: '15%' },
+                minWidth: { xs: 'auto', sm: '120px' },
+                fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                px: { xs: 1.5, sm: 2 },
+                whiteSpace: 'nowrap',
+              }}
             >
               PDF出力
             </Button>
