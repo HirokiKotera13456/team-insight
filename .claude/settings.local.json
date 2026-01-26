@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xxd:*)",
+      "Bash(ls:*)",
+      "Bash(taskkill:*)",
+      "Bash(cp:*)",
+      "Bash(node -e:*)"
+    ]
+  }
+}
