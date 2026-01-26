@@ -31,14 +31,16 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
         mx: 'auto',
       }}
     >
-      <CardContent sx={{ p: { xs: 4, sm: 5, md: 6 } }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+      <CardContent sx={{ p: { xs: 2.5, sm: 4, md: 6 } }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: { xs: 2, sm: 3 }, flexWrap: 'wrap', gap: 1 }}>
           <Chip
             label={axisName}
             size="small"
             sx={{
               backgroundColor: 'rgba(99, 102, 241, 0.1)',
               color: 'primary.main',
+              fontSize: { xs: '0.7rem', sm: '0.75rem' },
+              height: { xs: 24, sm: 28 },
             }}
           />
           <Chip
@@ -46,9 +48,10 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             size="small"
             variant="outlined"
             sx={{
-              fontSize: '0.75rem',
+              fontSize: { xs: '0.7rem', sm: '0.75rem' },
               color: 'text.secondary',
               opacity: 0.6,
+              height: { xs: 24, sm: 28 },
             }}
           />
         </Box>
@@ -57,7 +60,11 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           variant="h6"
           component="h2"
           fontWeight="600"
-          sx={{ mb: 1, lineHeight: 1.6 }}
+          sx={{ 
+            mb: { xs: 1, sm: 1.5 }, 
+            lineHeight: 1.6,
+            fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' },
+          }}
         >
           {question.text}
         </Typography>
@@ -66,13 +73,18 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           <Typography
             variant="caption"
             color="text.secondary"
-            sx={{ display: 'block', mb: 4, opacity: 0.8 }}
+            sx={{ 
+              display: 'block', 
+              mb: { xs: 3, sm: 4 }, 
+              opacity: 0.8,
+              fontSize: { xs: '0.7rem', sm: '0.75rem' },
+            }}
           >
             {question.context}
           </Typography>
         )}
 
-        <Box sx={{ px: { xs: 2, sm: 3, md: 4 }, mb: 3 }}>
+        <Box sx={{ px: { xs: 1, sm: 2, md: 4 }, mb: { xs: 2, sm: 3 } }}>
           <Slider
             value={value}
             onChange={(_, newValue) => onChange(typeof newValue === 'number' ? newValue : newValue[0])}
@@ -92,14 +104,14 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             valueLabelDisplay="off"
             sx={{
               '& .MuiSlider-thumb': {
-                width: 24,
-                height: 24,
+                width: { xs: 20, sm: 24 },
+                height: { xs: 20, sm: 24 },
                 boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
                 backgroundColor: '#6366f1',
                 '&:hover': {
                   boxShadow: '0 4px 12px rgba(99, 102, 241, 0.4)',
-                  width: 28,
-                  height: 28,
+                  width: { xs: 24, sm: 28 },
+                  height: { xs: 24, sm: 28 },
                   backgroundColor: '#4f46e5',
                 },
                 '&.Mui-focusVisible': {
@@ -107,21 +119,21 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 },
               },
               '& .MuiSlider-track': {
-                height: 6,
+                height: { xs: 4, sm: 6 },
                 backgroundColor: '#6366f1',
               },
               '& .MuiSlider-rail': {
-                height: 6,
+                height: { xs: 4, sm: 6 },
                 backgroundColor: 'rgba(0, 0, 0, 0.1)',
               },
               '& .MuiSlider-mark': {
                 backgroundColor: 'transparent',
               },
               '& .MuiSlider-markLabel': {
-                fontSize: '0.75rem',
+                fontSize: { xs: '0.65rem', sm: '0.75rem' },
                 color: 'text.secondary',
                 fontWeight: 500,
-                top: 36,
+                top: { xs: 32, sm: 36 },
               },
             }}
           />

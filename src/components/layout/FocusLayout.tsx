@@ -10,9 +10,11 @@ import {
   IconButton,
   Chip,
   useTheme,
+  useMediaQuery,
 } from '@mui/material';
 import { ArrowBack, AccountCircle } from '@mui/icons-material';
 import { useAuth } from '@/hooks/useAuth';
+import { APP_BAR_HEIGHT } from '@/constants/layout';
 
 interface FocusLayoutProps {
   children: React.ReactNode;
@@ -27,6 +29,7 @@ export const FocusLayout: React.FC<FocusLayoutProps> = ({
 }) => {
   const router = useRouter();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { user } = useAuth();
 
   return (
@@ -41,13 +44,20 @@ export const FocusLayout: React.FC<FocusLayoutProps> = ({
           borderColor: 'divider',
         }}
       >
-        <Toolbar sx={{ px: { xs: 2, md: 3 } }}>
+        <Toolbar 
+          sx={{ 
+            px: { xs: 1, sm: 2, md: 3 },
+            minHeight: { xs: '56px !important', md: `${APP_BAR_HEIGHT}px !important` },
+            height: { xs: '56px', md: `${APP_BAR_HEIGHT}px` },
+          }}
+        >
           {showBackButton && (
             <IconButton
               edge="start"
               onClick={() => router.push('/app')}
-              sx={{ mr: 2 }}
+              sx={{ mr: { xs: 1, sm: 2 } }}
               aria-label="戻る"
+              size="small"
             >
               <ArrowBack />
             </IconButton>
@@ -58,21 +68,30 @@ export const FocusLayout: React.FC<FocusLayoutProps> = ({
             sx={{
               flexGrow: 1,
               fontWeight: 600,
+              fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' },
               background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
             }}
           >
             WorkInsight
           </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, sm: 1, md: 2 } }}>
             <Chip
               label="診断中"
               size="small"
               sx={{
                 backgroundColor: 'rgba(99, 102, 241, 0.1)',
                 color: 'primary.main',
-                fontSize: '0.75rem',
+                fontSize: { xs: '0.65rem', sm: '0.75rem' },
+                height: { xs: 20, sm: 24 },
+                display: { xs: 'none', sm: 'flex' },
+                '& .MuiChip-label': {
+                  px: { xs: 0.75, sm: 1 },
+                },
               }}
             />
             <IconButton
@@ -81,6 +100,7 @@ export const FocusLayout: React.FC<FocusLayoutProps> = ({
               sx={{
                 border: '2px solid',
                 borderColor: 'divider',
+                p: { xs: 0.5, sm: 0.75 },
                 '&:hover': {
                   borderColor: 'primary.main',
                 },
@@ -88,9 +108,9 @@ export const FocusLayout: React.FC<FocusLayoutProps> = ({
             >
               <Avatar
                 src={user?.photoURL || undefined}
-                sx={{ width: 28, height: 28 }}
+                sx={{ width: { xs: 24, sm: 28 }, height: { xs: 24, sm: 28 } }}
               >
-                {user?.displayName?.[0] || <AccountCircle />}
+                {user?.displayName?.[0] || <AccountCircle sx={{ fontSize: { xs: 18, sm: 20 } }} />}
               </Avatar>
             </IconButton>
           </Box>
@@ -101,7 +121,7 @@ export const FocusLayout: React.FC<FocusLayoutProps> = ({
         component="main"
         sx={{
           flexGrow: 1,
-          mt: 8,
+          mt: { xs: '56px', md: `${APP_BAR_HEIGHT}px` },
           display: 'flex',
           justifyContent: 'center',
         }}
@@ -109,8 +129,8 @@ export const FocusLayout: React.FC<FocusLayoutProps> = ({
         <Container
           maxWidth="md"
           sx={{
-            py: { xs: 3, md: 5 },
-            px: { xs: 2, sm: 3, md: 4 },
+            py: { xs: 2, sm: 3, md: 5 },
+            px: { xs: 1.5, sm: 2, md: 4 },
             maxWidth: { xs: '100%', sm: '600px', md: '700px' },
           }}
         >

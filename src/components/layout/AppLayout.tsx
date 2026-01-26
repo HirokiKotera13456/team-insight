@@ -141,21 +141,54 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.default' }}>
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-        <Toolbar sx={{ px: { xs: 2, md: 3 } }}>
+        <Toolbar 
+          sx={{ 
+            px: { xs: 1, sm: 2, md: 3 },
+            minHeight: { xs: '56px !important', md: `${APP_BAR_HEIGHT}px !important` },
+            height: { xs: '56px', md: `${APP_BAR_HEIGHT}px` },
+          }}
+        >
           {isMobile && (
             <IconButton
               color="inherit"
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
-              sx={{ mr: 2 }}
+              sx={{ mr: { xs: 1, sm: 2 } }}
+              size="small"
             >
               <MenuIcon />
             </IconButton>
           )}
+          {!isMobile && (
+            <Typography
+              variant="h6"
+              component="div"
+              fontWeight="bold"
+              sx={{
+                mr: 3,
+                background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                display: { xs: 'none', md: 'block' },
+              }}
+            >
+              WorkInsight
+            </Typography>
+          )}
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Typography variant="body2" color="text.secondary" sx={{ display: { xs: 'none', sm: 'block' } }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, sm: 1, md: 2 } }}>
+            <Typography 
+              variant="body2" 
+              color="text.secondary" 
+              sx={{ 
+                display: { xs: 'none', md: 'block' },
+                maxWidth: { md: '200px' },
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
               {user?.displayName || user?.email}
             </Typography>
             <IconButton
@@ -166,6 +199,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
               sx={{
                 border: '2px solid',
                 borderColor: 'divider',
+                p: { xs: 0.5, sm: 0.75 },
                 '&:hover': {
                   borderColor: 'primary.main',
                 },
@@ -173,9 +207,9 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             >
               <Avatar
                 src={user?.photoURL || undefined}
-                sx={{ width: 32, height: 32 }}
+                sx={{ width: { xs: 28, sm: 32 }, height: { xs: 28, sm: 32 } }}
               >
-                {user?.displayName?.[0] || <AccountCircle />}
+                {user?.displayName?.[0] || <AccountCircle sx={{ fontSize: { xs: 20, sm: 24 } }} />}
               </Avatar>
             </IconButton>
           </Box>
@@ -237,7 +271,8 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
           sx={{
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
-              width: drawerWidth,
+              width: { xs: '280px', sm: drawerWidth },
+              maxWidth: '85vw',
             },
           }}
         >
@@ -252,7 +287,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
           // PC: Sidebar分のマージンを確保
           ml: { md: `${drawerWidth}px` },
           // モバイル: マージンなし
-          mt: `${APP_BAR_HEIGHT}px`,
+          mt: { xs: '56px', md: `${APP_BAR_HEIGHT}px` },
           mb: { xs: `${BOTTOM_NAV_HEIGHT}px`, md: 0 },
           minHeight: { md: `calc(100vh - ${APP_BAR_HEIGHT}px)` },
           overflow: 'auto',
@@ -264,8 +299,8 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
           sx={{
             width: '100%',
             maxWidth: { xs: '100%', sm: '900px', md: '1200px' },
-            px: { xs: 2, sm: 3, md: 4 },
-            py: { xs: 3, md: 5 },
+            px: { xs: 1.5, sm: 2, md: 4 },
+            py: { xs: 2, sm: 3, md: 5 },
             mx: 'auto',
             flex: 1,
           }}
@@ -295,10 +330,20 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
               router.push(navigationItems[newValue].path);
             }}
             sx={{
+              height: BOTTOM_NAV_HEIGHT,
               '& .MuiBottomNavigationAction-root': {
                 color: 'text.secondary',
+                minWidth: { xs: '60px', sm: '80px' },
+                padding: { xs: '6px 8px', sm: '6px 12px' },
                 '&.Mui-selected': {
                   color: 'primary.main',
+                },
+                '& .MuiBottomNavigationAction-label': {
+                  fontSize: { xs: '0.65rem', sm: '0.75rem' },
+                  mt: 0.5,
+                  '&.Mui-selected': {
+                    fontSize: { xs: '0.65rem', sm: '0.75rem' },
+                  },
                 },
               },
             }}
@@ -308,6 +353,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                 key={item.path}
                 label={item.text}
                 icon={item.icon}
+                showLabel
               />
             ))}
           </BottomNavigation>

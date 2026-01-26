@@ -25,8 +25,13 @@ export const StatCard: React.FC<StatCardProps> = ({
         },
       }}
     >
-      <CardContent sx={{ p: 3 }}>
-        <Typography variant="body2" color="text.secondary" gutterBottom>
+      <CardContent sx={{ p: { xs: 2, sm: 2.5, md: 3 } }}>
+        <Typography 
+          variant="body2" 
+          color="text.secondary" 
+          gutterBottom
+          sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
+        >
           {title}
         </Typography>
         <Typography
@@ -34,11 +39,16 @@ export const StatCard: React.FC<StatCardProps> = ({
           color={`${color}.main`}
           fontWeight="bold"
           gutterBottom
+          sx={{ fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' } }}
         >
           {value}
         </Typography>
         {subtitle && (
-          <Typography variant="caption" color="text.secondary">
+          <Typography 
+            variant="caption" 
+            color="text.secondary"
+            sx={{ fontSize: { xs: '0.65rem', sm: '0.75rem' } }}
+          >
             {subtitle}
           </Typography>
         )}

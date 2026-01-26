@@ -26,12 +26,12 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({ summary }) => {
         },
       }}
     >
-      <CardContent sx={{ p: 3.5 }}>
-        <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2.5 }}>
+      <CardContent sx={{ p: { xs: 2, sm: 2.5, md: 3.5 } }}>
+        <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: { xs: 1.5, sm: 2, md: 2.5 } }}>
           <Box
             sx={{
-              width: 48,
-              height: 48,
+              width: { xs: 40, sm: 44, md: 48 },
+              height: { xs: 40, sm: 44, md: 48 },
               borderRadius: 3,
               background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
               display: 'flex',
@@ -41,18 +41,18 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({ summary }) => {
               flexShrink: 0,
             }}
           >
-            <AutoAwesome sx={{ color: '#fff', fontSize: 24 }} />
+            <AutoAwesome sx={{ color: '#fff', fontSize: { xs: 20, sm: 22, md: 24 } }} />
           </Box>
-          <Box sx={{ flex: 1 }}>
+          <Box sx={{ flex: 1, minWidth: 0 }}>
             <Typography
               variant="subtitle2"
               sx={{
-                mb: 1,
+                mb: { xs: 0.75, sm: 1 },
                 color: '#6366f1',
                 fontWeight: 600,
                 textTransform: 'uppercase',
                 letterSpacing: 1,
-                fontSize: '0.7rem',
+                fontSize: { xs: '0.65rem', sm: '0.7rem' },
               }}
             >
               ざっくりまとめると
@@ -62,8 +62,9 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({ summary }) => {
               fontWeight="500"
               sx={{
                 lineHeight: 1.8,
-                mb: 1.5,
+                mb: { xs: 1, sm: 1.5 },
                 color: 'text.primary',
+                fontSize: { xs: '0.875rem', sm: '1rem' },
               }}
             >
               {summary}
@@ -73,7 +74,7 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({ summary }) => {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 0.5,
-                px: 1.5,
+                px: { xs: 1, sm: 1.5 },
                 py: 0.5,
                 borderRadius: 2,
                 backgroundColor: alpha('#6366f1', 0.08),
@@ -83,7 +84,7 @@ export const SummaryCard: React.FC<SummaryCardProps> = ({ summary }) => {
                 variant="caption"
                 sx={{
                   color: 'text.secondary',
-                  fontSize: '0.7rem',
+                  fontSize: { xs: '0.65rem', sm: '0.7rem' },
                 }}
               >
                 あくまで「仕事の進め方」の傾向です。性格とは違います

@@ -28,12 +28,13 @@ export const StepFooter: React.FC<StepFooterProps> = ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        mt: 5,
-        gap: 2,
-        pt: 4,
+        mt: { xs: 3, sm: 4, md: 5 },
+        gap: { xs: 1.5, sm: 2 },
+        pt: { xs: 3, sm: 4 },
         borderTop: '1px solid',
         borderColor: 'divider',
         width: '100%',
+        flexWrap: { xs: 'wrap', sm: 'nowrap' },
       }}
     >
       <Button
@@ -41,7 +42,11 @@ export const StepFooter: React.FC<StepFooterProps> = ({
         startIcon={<ArrowBack />}
         onClick={onPrevious}
         disabled={isFirst}
-        sx={{ minWidth: 140 }}
+        sx={{ 
+          minWidth: { xs: 'calc(50% - 8px)', sm: 140 },
+          width: { xs: 'calc(50% - 8px)', sm: 'auto' },
+          fontSize: { xs: '0.875rem', sm: '0.9375rem' },
+        }}
       >
         前の質問
       </Button>
@@ -51,7 +56,11 @@ export const StepFooter: React.FC<StepFooterProps> = ({
         endIcon={<ArrowForward />}
         onClick={onNext}
         disabled={!canProceed || isSaving}
-        sx={{ minWidth: 120 }}
+        sx={{ 
+          minWidth: { xs: 'calc(50% - 8px)', sm: 120 },
+          width: { xs: 'calc(50% - 8px)', sm: 'auto' },
+          fontSize: { xs: '0.875rem', sm: '0.9375rem' },
+        }}
       >
         {isLast ? '保存して結果へ' : '次へ'}
       </Button>
