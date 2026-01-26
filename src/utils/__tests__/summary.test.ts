@@ -41,8 +41,8 @@ describe('summary', () => {
       };
 
       const summary = getOverallSummary(scores);
-      expect(summary).toContain('慎重に情報を集め');
-      expect(summary).toContain('柔軟に計画を調整');
+      expect(summary).toContain('情報を集めてから動き');
+      expect(summary).toContain('柔軟に調整する');
     });
 
     it('should return right-leaning summary when rightCount >= 2', () => {
@@ -66,7 +66,7 @@ describe('summary', () => {
       };
 
       const summary = getOverallSummary(scores);
-      expect(summary).toContain('まず動いて調整し');
+      expect(summary).toContain('まず動いてから調整し');
       expect(summary).toContain('計画を立てて進める');
     });
 
@@ -98,24 +98,24 @@ describe('summary', () => {
 
   describe('getAxisTendencyLabel', () => {
     it('should return correct label for left range', () => {
-      expect(getAxisTendencyLabel('energy', SCORE_THRESHOLDS.LEFT)).toBe('やや慎重');
-      expect(getAxisTendencyLabel('thinking', SCORE_THRESHOLDS.LEFT)).toBe('やや共感重視');
-      expect(getAxisTendencyLabel('planning', SCORE_THRESHOLDS.LEFT)).toBe('やや柔軟');
-      expect(getAxisTendencyLabel('vision', SCORE_THRESHOLDS.LEFT)).toBe('やや具体重視');
+      expect(getAxisTendencyLabel('energy', SCORE_THRESHOLDS.LEFT)).toBe('石橋を叩いてから渡る派');
+      expect(getAxisTendencyLabel('thinking', SCORE_THRESHOLDS.LEFT)).toBe('人の気持ちを大事にする派');
+      expect(getAxisTendencyLabel('planning', SCORE_THRESHOLDS.LEFT)).toBe('臨機応変に対応する派');
+      expect(getAxisTendencyLabel('vision', SCORE_THRESHOLDS.LEFT)).toBe('具体例から入る派');
     });
 
     it('should return correct label for middle range', () => {
-      expect(getAxisTendencyLabel('energy', 50)).toBe('状況に応じて切り替える傾向');
-      expect(getAxisTendencyLabel('thinking', 50)).toBe('周囲を見ながら判断する傾向');
-      expect(getAxisTendencyLabel('planning', 50)).toBe('極端に寄らず調整するタイプ');
-      expect(getAxisTendencyLabel('vision', 50)).toBe('具体と抽象を使い分ける傾向');
+      expect(getAxisTendencyLabel('energy', 50)).toBe('状況を見て切り替える派');
+      expect(getAxisTendencyLabel('thinking', 50)).toBe('バランスを見て判断する派');
+      expect(getAxisTendencyLabel('planning', 50)).toBe('計画と柔軟さを両立する派');
+      expect(getAxisTendencyLabel('vision', 50)).toBe('具体と抽象を行き来する派');
     });
 
     it('should return correct label for right range', () => {
-      expect(getAxisTendencyLabel('energy', SCORE_THRESHOLDS.RIGHT + 1)).toBe('やや行動派');
-      expect(getAxisTendencyLabel('thinking', SCORE_THRESHOLDS.RIGHT + 1)).toBe('やや論理重視');
-      expect(getAxisTendencyLabel('planning', SCORE_THRESHOLDS.RIGHT + 1)).toBe('やや計画重視');
-      expect(getAxisTendencyLabel('vision', SCORE_THRESHOLDS.RIGHT + 1)).toBe('やや抽象重視');
+      expect(getAxisTendencyLabel('energy', SCORE_THRESHOLDS.RIGHT + 1)).toBe('まず動いてみる派');
+      expect(getAxisTendencyLabel('thinking', SCORE_THRESHOLDS.RIGHT + 1)).toBe('データと論理で決める派');
+      expect(getAxisTendencyLabel('planning', SCORE_THRESHOLDS.RIGHT + 1)).toBe('計画をしっかり立てる派');
+      expect(getAxisTendencyLabel('vision', SCORE_THRESHOLDS.RIGHT + 1)).toBe('大きな絵から入る派');
     });
   });
 
@@ -124,21 +124,21 @@ describe('summary', () => {
       expect(getAxisWorkExample('energy', SCORE_THRESHOLDS.LEFT)).toContain('全員の意見を聞いてから');
       expect(getAxisWorkExample('thinking', SCORE_THRESHOLDS.LEFT)).toContain('相手の反応を見ながら');
       expect(getAxisWorkExample('planning', SCORE_THRESHOLDS.LEFT)).toContain('影響範囲を確認してから');
-      expect(getAxisWorkExample('vision', SCORE_THRESHOLDS.LEFT)).toContain('具体例を出してから');
+      expect(getAxisWorkExample('vision', SCORE_THRESHOLDS.LEFT)).toContain('具体例から入る');
     });
 
     it('should return correct example for middle range', () => {
-      expect(getAxisWorkExample('energy', 50)).toContain('情報が揃いかけたタイミング');
+      expect(getAxisWorkExample('energy', 50)).toContain('情報がある程度揃ったら');
       expect(getAxisWorkExample('thinking', 50)).toContain('納得感と根拠の両方');
-      expect(getAxisWorkExample('planning', 50)).toContain('柔軟に変更する');
-      expect(getAxisWorkExample('vision', 50)).toContain('具体例と抽象概念');
+      expect(getAxisWorkExample('planning', 50)).toContain('柔軟に変える');
+      expect(getAxisWorkExample('vision', 50)).toContain('具体例と全体像');
     });
 
     it('should return correct example for right range', () => {
-      expect(getAxisWorkExample('energy', SCORE_THRESHOLDS.RIGHT + 1)).toContain('60%程度情報が揃った時点');
-      expect(getAxisWorkExample('thinking', SCORE_THRESHOLDS.RIGHT + 1)).toContain('事実と論点を優先');
-      expect(getAxisWorkExample('planning', SCORE_THRESHOLDS.RIGHT + 1)).toContain('計画を最初に固めて');
-      expect(getAxisWorkExample('vision', SCORE_THRESHOLDS.RIGHT + 1)).toContain('目的や原則から');
+      expect(getAxisWorkExample('energy', SCORE_THRESHOLDS.RIGHT + 1)).toContain('6割くらい情報が揃ったら');
+      expect(getAxisWorkExample('thinking', SCORE_THRESHOLDS.RIGHT + 1)).toContain('事実ベースでストレートに伝える');
+      expect(getAxisWorkExample('planning', SCORE_THRESHOLDS.RIGHT + 1)).toContain('最初に計画を固めて');
+      expect(getAxisWorkExample('vision', SCORE_THRESHOLDS.RIGHT + 1)).toContain('目的や全体像');
     });
   });
 });

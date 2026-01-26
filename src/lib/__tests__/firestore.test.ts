@@ -2,10 +2,22 @@ import {
   saveUserData,
   saveAxisScores,
   getLatestAxisScores,
+  getAssessmentHistory,
 } from '../firestore';
-import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
+import {
+  doc,
+  setDoc,
+  getDoc,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+  getDocs,
+  serverTimestamp,
+} from 'firebase/firestore';
 import { db } from '../firebase';
-import { AxisScores, UserData } from '@/types';
+import { AxisScores, UserData, AssessmentHistory } from '@/types';
 import { User } from 'firebase/auth';
 
 // Mock Firebase Firestore
@@ -13,6 +25,12 @@ jest.mock('firebase/firestore', () => ({
   doc: jest.fn(),
   setDoc: jest.fn(),
   getDoc: jest.fn(),
+  collection: jest.fn(),
+  addDoc: jest.fn(),
+  query: jest.fn(),
+  orderBy: jest.fn(),
+  limit: jest.fn(),
+  getDocs: jest.fn(),
   serverTimestamp: jest.fn(() => ({ _methodName: 'serverTimestamp' })),
 }));
 
@@ -128,19 +146,24 @@ describe('firestore', () => {
 
     const mockUserRef = {};
     const mockLatestRef = {};
+    const mockHistoryRef = {};
+    const mockHistoryDocRef = { id: 'history-doc-id' };
 
     beforeEach(() => {
       (doc as jest.Mock)
         .mockReturnValueOnce(mockUserRef)
         .mockReturnValueOnce(mockLatestRef);
+      (collection as jest.Mock).mockReturnValue(mockHistoryRef);
       (setDoc as jest.Mock).mockResolvedValue(undefined);
+      (addDoc as jest.Mock).mockResolvedValue(mockHistoryDocRef);
     });
 
-    it('should save axis scores successfully', async () => {
+    it('should save axis scores successfully with history', async () => {
       await saveAxisScores(uid, scores);
 
       expect(doc).toHaveBeenCalledWith(db, 'users', uid);
       expect(doc).toHaveBeenCalledWith(db, 'users', uid, 'axis_scores', 'latest');
+      expect(collection).toHaveBeenCalledWith(db, 'users', uid, 'assessment_history');
       expect(setDoc).toHaveBeenCalledWith(
         mockUserRef,
         { updatedAt: expect.any(Object) },
@@ -154,6 +177,11 @@ describe('firestore', () => {
           version: 'axis_v1',
         }
       );
+      expect(addDoc).toHaveBeenCalledWith(mockHistoryRef, {
+        ...scores,
+        answeredAt: expect.any(Object),
+        createdAt: expect.any(Object),
+      });
     });
 
     it('should throw error with permission-denied message', async () => {
@@ -247,6 +275,94 @@ describe('firestore', () => {
         planning: 40,
         vision: 70,
       });
+    });
+  });
+
+  describe('getAssessmentHistory', () => {
+    const uid = 'test-uid';
+    const mockHistoryRef = {};
+    const mockQuery = {};
+    const mockQuerySnapshot = {
+      docs: [
+        {
+          id: 'history-1',
+          data: () => ({
+            energy: 50,
+            thinking: 60,
+            planning: 40,
+            vision: 70,
+            answeredAt: { toMillis: () => Date.now() },
+            createdAt: { toMillis: () => Date.now() },
+          }),
+        },
+        {
+          id: 'history-2',
+          data: () => ({
+            energy: 55,
+            thinking: 65,
+            planning: 45,
+            vision: 75,
+            answeredAt: { toMillis: () => Date.now() - 86400000 },
+            createdAt: { toMillis: () => Date.now() - 86400000 },
+          }),
+        },
+      ],
+    };
+
+    beforeEach(() => {
+      (collection as jest.Mock).mockReturnValue(mockHistoryRef);
+      (query as jest.Mock).mockReturnValue(mockQuery);
+      (orderBy as jest.Mock).mockReturnValue({});
+      (limit as jest.Mock).mockReturnValue({});
+      (getDocs as jest.Mock).mockResolvedValue(mockQuerySnapshot);
+    });
+
+    it('should return assessment history successfully', async () => {
+      const result = await getAssessmentHistory(uid);
+
+      expect(collection).toHaveBeenCalledWith(db, 'users', uid, 'assessment_history');
+      expect(query).toHaveBeenCalled();
+      expect(orderBy).toHaveBeenCalledWith('answeredAt', 'desc');
+      expect(limit).toHaveBeenCalledWith(50);
+      expect(getDocs).toHaveBeenCalledWith(mockQuery);
+      expect(result).toHaveLength(2);
+      expect(result[0].id).toBe('history-1');
+      expect(result[0].energy).toBe(50);
+      expect(result[1].id).toBe('history-2');
+      expect(result[1].energy).toBe(55);
+    });
+
+    it('should use custom limitCount', async () => {
+      await getAssessmentHistory(uid, 10);
+
+      expect(limit).toHaveBeenCalledWith(10);
+    });
+
+    it('should return empty array when no history exists', async () => {
+      (getDocs as jest.Mock).mockResolvedValue({ docs: [] });
+
+      const result = await getAssessmentHistory(uid);
+
+      expect(result).toEqual([]);
+    });
+
+    it('should throw error with permission-denied message', async () => {
+      const error = new Error('Permission denied');
+      (error as any).code = 'permission-denied';
+      (getDocs as jest.Mock).mockRejectedValue(error);
+
+      await expect(getAssessmentHistory(uid)).rejects.toThrow(
+        '履歴の取得に失敗しました。Firestoreのセキュリティルールが正しく設定されていない可能性があります。firebase deploy --only firestore:rules を実行してセキュリティルールをデプロイしてください。'
+      );
+    });
+
+    it('should throw error with generic message for other errors', async () => {
+      const error = new Error('Network error');
+      (getDocs as jest.Mock).mockRejectedValue(error);
+
+      await expect(getAssessmentHistory(uid)).rejects.toThrow(
+        '履歴の取得に失敗しました: Network error'
+      );
     });
   });
 });

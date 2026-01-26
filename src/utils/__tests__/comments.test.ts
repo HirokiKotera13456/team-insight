@@ -14,10 +14,10 @@ describe('comments', () => {
 
       const comments = getAxisComments(scores);
 
-      expect(comments.energy).toBe('慎重に情報を集めてから動く傾向があります');
-      expect(comments.thinking).toBe('人の気持ちや雰囲気を重視して判断する傾向があります');
-      expect(comments.planning).toBe('状況に応じて柔軟に計画を変更する傾向があります');
-      expect(comments.vision).toBe('具体例や現実的な視点から考える傾向があります');
+      expect(comments.energy).toBe('情報が揃ってから動くほうが安心するタイプ。じっくり考えてから決めたい。');
+      expect(comments.thinking).toBe('相手の気持ちや場の雰囲気を大事にするタイプ。まわりへの配慮を忘れない。');
+      expect(comments.planning).toBe('状況に合わせて柔軟に動くタイプ。決めすぎないほうがうまくいく。');
+      expect(comments.vision).toBe('具体的な話から入るほうが考えやすいタイプ。現実的な視点を大切にする。');
     });
 
     it('should return balance comments for scores between LEFT and MIDDLE_RIGHT', () => {
@@ -30,10 +30,10 @@ describe('comments', () => {
 
       const comments = getAxisComments(scores);
 
-      expect(comments.energy).toBe('状況に応じて慎重さとスピードを切り替えます');
-      expect(comments.thinking).toBe('感情と論理のバランスを取って判断します');
-      expect(comments.planning).toBe('計画と柔軟性のバランスを保ちます');
-      expect(comments.vision).toBe('具体と抽象の両方の視点を持っています');
+      expect(comments.energy).toBe('状況を見てスピードを調整するタイプ。急ぐときは急ぐ、慎重なときは慎重に。');
+      expect(comments.thinking).toBe('感情と論理、両方を見て判断するタイプ。バランス感覚がある。');
+      expect(comments.planning).toBe('計画は立てつつ、必要なら柔軟に変えるタイプ。ガチガチには決めない。');
+      expect(comments.vision).toBe('具体と抽象、どちらの視点も使えるタイプ。話の粒度を調整できる。');
     });
 
     it('should return right-leaning comments for scores > MIDDLE_RIGHT', () => {
@@ -46,10 +46,10 @@ describe('comments', () => {
 
       const comments = getAxisComments(scores);
 
-      expect(comments.energy).toBe('まず動いて調整する傾向があります');
-      expect(comments.thinking).toBe('論理・事実・データを重視して判断する傾向があります');
-      expect(comments.planning).toBe('計画を立ててそれに沿って進める傾向があります');
-      expect(comments.vision).toBe('抽象概念や長期的な視点から考える傾向があります');
+      expect(comments.energy).toBe('まず動いてから考えるタイプ。走りながら調整するほうが性に合う。');
+      expect(comments.thinking).toBe('データや論理で判断するタイプ。感情より事実を優先したい。');
+      expect(comments.planning).toBe('計画を立ててから進めたいタイプ。段取りがあると安心する。');
+      expect(comments.vision).toBe('大きな絵や目的から入るタイプ。全体像を押さえてから細部に行きたい。');
     });
 
     it('should handle boundary values correctly', () => {
@@ -62,10 +62,10 @@ describe('comments', () => {
 
       const comments = getAxisComments(scores1);
 
-      expect(comments.energy).toBe('状況に応じて慎重さとスピードを切り替えます');
-      expect(comments.thinking).toBe('感情と論理のバランスを取って判断します');
-      expect(comments.planning).toBe('計画を立ててそれに沿って進める傾向があります');
-      expect(comments.vision).toBe('抽象概念や長期的な視点から考える傾向があります');
+      expect(comments.energy).toBe('状況を見てスピードを調整するタイプ。急ぐときは急ぐ、慎重なときは慎重に。');
+      expect(comments.thinking).toBe('感情と論理、両方を見て判断するタイプ。バランス感覚がある。');
+      expect(comments.planning).toBe('計画を立ててから進めたいタイプ。段取りがあると安心する。');
+      expect(comments.vision).toBe('大きな絵や目的から入るタイプ。全体像を押さえてから細部に行きたい。');
     });
   });
 
