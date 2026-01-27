@@ -8,7 +8,7 @@ interface UseAssessmentResult {
   currentIndex: number;
   answers: Record<string, number>;
   saving: boolean;
-  snackbar: { open: boolean; message: string; severity: 'success' | 'error' };
+  snackbar: { open: boolean; message: string; severity: 'success' | 'error' | 'info' | 'warning' };
   setCurrentIndex: (index: number) => void;
   handleSliderChange: (questionId: string, value: number) => void;
   handleSave: (navigateToResult?: boolean) => Promise<void>;
@@ -27,7 +27,7 @@ export const useAssessment = (uid: string | undefined): UseAssessmentResult => {
     }, {} as Record<string, number>)
   );
   const [saving, setSaving] = useState(false);
-  const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: 'success' | 'error' }>({
+  const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: 'success' | 'error' | 'info' | 'warning' }>({
     open: false,
     message: '',
     severity: 'success',
