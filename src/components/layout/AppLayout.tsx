@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import {
   AppBar,
   Box,
+  Button,
   Container,
   Drawer,
   IconButton,
@@ -157,64 +158,93 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             </Typography>
           )}
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, sm: 1, md: 2 } }}>
-            <Typography 
-              variant="body2" 
-              color="text.secondary" 
-              sx={{ 
-                display: { xs: 'none', md: 'block' },
-                maxWidth: { md: '200px' },
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {user?.displayName || user?.email}
-            </Typography>
-            <IconButton
-              size="small"
-              edge="end"
-              aria-label="account menu"
-              onClick={handleMenuOpen}
-              sx={{
-                border: '2px solid',
-                borderColor: 'divider',
-                p: { xs: 0.5, sm: 0.75 },
-                '&:hover': {
-                  borderColor: 'primary.main',
-                },
-              }}
-            >
-              <Avatar
-                src={user?.photoURL || undefined}
-                sx={{ width: { xs: 28, sm: 32 }, height: { xs: 28, sm: 32 } }}
+          {user ? (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, sm: 1, md: 2 } }}>
+              <Typography 
+                variant="body2" 
+                color="text.secondary" 
+                sx={{ 
+                  display: { xs: 'none', md: 'block' },
+                  maxWidth: { md: '200px' },
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}
               >
-                {user?.displayName?.[0] || <AccountCircle sx={{ fontSize: { xs: 20, sm: 24 } }} />}
-              </Avatar>
-            </IconButton>
-          </Box>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleMenuClose}
-            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-            PaperProps={{
-              sx: {
-                mt: 1,
-                minWidth: 200,
-                borderRadius: 2,
-                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-              },
-            }}
-          >
-            <MenuItem onClick={handleLogout}>
-              <ListItemIcon>
-                <Logout fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>ログアウト</ListItemText>
-            </MenuItem>
-          </Menu>
+                {user.displayName || user.email}
+              </Typography>
+              <IconButton
+                size="small"
+                edge="end"
+                aria-label="account menu"
+                onClick={handleMenuOpen}
+                sx={{
+                  border: '2px solid',
+                  borderColor: 'divider',
+                  p: { xs: 0.5, sm: 0.75 },
+                  '&:hover': {
+                    borderColor: 'primary.main',
+                  },
+                }}
+              >
+                <Avatar
+                  src={user.photoURL || undefined}
+                  sx={{ width: { xs: 28, sm: 32 }, height: { xs: 28, sm: 32 } }}
+                >
+                  {user.displayName?.[0] || <AccountCircle sx={{ fontSize: { xs: 20, sm: 24 } }} />}
+                </Avatar>
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                PaperProps={{
+                  sx: {
+                    mt: 1,
+                    minWidth: 200,
+                    borderRadius: 2,
+                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                  },
+                }}
+              >
+                <MenuItem onClick={handleLogout}>
+                  <ListItemIcon>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText>ログアウト</ListItemText>
+                </MenuItem>
+              </Menu>
+            </Box>
+          ) : (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.5, sm: 1, md: 2 } }}>
+              <Typography 
+                variant="body2" 
+                color="text.secondary" 
+                sx={{ 
+                  display: { xs: 'none', md: 'block' },
+                  fontSize: { md: '0.875rem' },
+                }}
+              >
+                ゲスト
+              </Typography>
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={() => router.push('/login')}
+                sx={{
+                  fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                  px: { xs: 1, sm: 1.5 },
+                  py: { xs: 0.5, sm: 0.75 },
+                  minWidth: 'auto',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                ログインページへ戻る
+              </Button>
+            </Box>
+          )}
         </Toolbar>
       </AppBar>
 

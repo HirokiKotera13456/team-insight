@@ -9,11 +9,9 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (!loading) {
-      if (user) {
-        router.push('/app');
-      } else {
-        router.push('/login');
-      }
+      // ログインしている場合も、ログインしていない場合も/appにリダイレクト
+      // /app側でProtectedRouteのallowGuestにより、ログインなしでもアクセス可能
+      router.push('/app');
     }
   }, [user, loading, router]);
 

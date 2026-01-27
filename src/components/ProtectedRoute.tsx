@@ -1,22 +1,15 @@
-import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import React from 'react';
 import { Box } from '@mui/material';
 import { useAuth } from '@/hooks/useAuth';
 import { LoadingState } from '@/components/ui/LoadingState';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
+  allowGuest?: boolean; // 認証なしでもアクセス可能にするか（現在は使用されていませんが、互換性のため残しています）
 }
 
-export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { user, loading } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/login');
-    }
-  }, [user, loading, router]);
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowGuest = true }) => {
+  const { loading } = useAuth();
 
   if (loading) {
     return (
@@ -32,10 +25,6 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
         <LoadingState />
       </Box>
     );
-  }
-
-  if (!user) {
-    return null;
   }
 
   return <>{children}</>;

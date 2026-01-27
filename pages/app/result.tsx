@@ -100,7 +100,7 @@ const Result: React.FC = () => {
 
   if (loading) {
     return (
-      <ProtectedRoute>
+      <ProtectedRoute allowGuest>
         <AppLayout>
           <Box sx={{ width: '100%' }}>
             <LoadingState />
@@ -112,7 +112,7 @@ const Result: React.FC = () => {
 
   if (error || !scores) {
     return (
-      <ProtectedRoute>
+      <ProtectedRoute allowGuest>
         <AppLayout>
           <Box sx={{ width: '100%' }}>
             <Alert severity="error" sx={{ borderRadius: 3, width: '100%' }}>
@@ -157,9 +157,23 @@ const Result: React.FC = () => {
   };
 
   return (
-    <ProtectedRoute>
+    <ProtectedRoute allowGuest>
       <AppLayout>
         <Box sx={{ width: '100%' }}>
+          {!user && (
+            <Alert 
+              severity="warning" 
+              sx={{ 
+                borderRadius: 3, 
+                width: '100%', 
+                mb: 3,
+                backgroundColor: 'rgba(245, 158, 11, 0.08)',
+                border: '1px solid rgba(245, 158, 11, 0.2)',
+              }}
+            >
+              ⚠️ 現在ログインしていません。この診断結果は保存されていません。ログインすると、診断結果を保存して過去の履歴を確認できるようになります。
+            </Alert>
+          )}
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 3 }}>
             <SectionTitle
               title="診断結果"

@@ -14,10 +14,22 @@ const History: React.FC = () => {
   const { history, loading, error } = useAssessmentHistory(user?.uid);
 
   return (
-    <ProtectedRoute>
+    <ProtectedRoute allowGuest>
       <AppLayout>
         <Box sx={{ width: '100%' }}>
-          {loading ? (
+          {!user ? (
+            <Alert 
+              severity="warning" 
+              sx={{ 
+                borderRadius: 3, 
+                width: '100%',
+                backgroundColor: 'rgba(245, 158, 11, 0.08)',
+                border: '1px solid rgba(245, 158, 11, 0.2)',
+              }}
+            >
+              ⚠️ 診断履歴を表示するにはログインが必要です。ログインすると、過去の診断結果とスコアの変化を確認できるようになります。
+            </Alert>
+          ) : loading ? (
             <LoadingState />
           ) : (
             <>

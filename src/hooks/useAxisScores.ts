@@ -16,7 +16,22 @@ export const useAxisScores = (uid: string | undefined): UseAxisScoresResult => {
 
   const loadScores = async () => {
     if (!uid) {
-      setLoading(false);
+      // ログインしていない場合はローカルストレージから読み込む
+      try {
+        setLoading(true);
+        setError(null);
+        const guestScores = localStorage.getItem('guest_assessment_scores');
+        if (guestScores) {
+          setScores(JSON.parse(guestScores));
+        } else {
+          setScores(null);
+        }
+      } catch (err) {
+        console.error('ローカルストレージ読み込みエラー:', err);
+        setScores(null);
+      } finally {
+        setLoading(false);
+      }
       return;
     }
 

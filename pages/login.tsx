@@ -370,6 +370,92 @@ const Login: React.FC = () => {
               >
                 {signingIn ? 'ログイン中...' : 'Googleでログイン'}
               </Button>
+
+              {/* 区切り線 */}
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  width: '100%',
+                  gap: 2,
+                  my: 1,
+                }}
+              >
+                <Box
+                  sx={{
+                    flex: 1,
+                    height: 1,
+                    background: `linear-gradient(90deg, transparent, ${alpha('#94a3b8', 0.3)}, transparent)`,
+                  }}
+                />
+                <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.875rem' }}>
+                  または
+                </Typography>
+                <Box
+                  sx={{
+                    flex: 1,
+                    height: 1,
+                    background: `linear-gradient(90deg, transparent, ${alpha('#94a3b8', 0.3)}, transparent)`,
+                  }}
+                />
+              </Box>
+
+              {/* ログインなしで診断ボタン */}
+              <Button
+                variant="outlined"
+                size="large"
+                fullWidth
+                startIcon={<Insights sx={{ fontSize: 22 }} />}
+                onClick={() => router.push('/app')}
+                sx={{
+                  py: 2,
+                  fontSize: '1.05rem',
+                  fontWeight: 600,
+                  borderRadius: 0,
+                  borderWidth: 2,
+                  borderColor: alpha('#6366f1', 0.3),
+                  color: '#6366f1',
+                  backgroundColor: alpha('#6366f1', 0.02),
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  '&:hover': {
+                    borderColor: '#6366f1',
+                    backgroundColor: alpha('#6366f1', 0.08),
+                    transform: 'translateY(-2px)',
+                    boxShadow: `0 8px 24px ${alpha('#6366f1', 0.2)}`,
+                  },
+                  '&:active': {
+                    transform: 'translateY(0)',
+                  },
+                }}
+              >
+                ログインなしで診断をする
+              </Button>
+
+              {/* 注意書き */}
+              <Box
+                sx={{
+                  mt: 2,
+                  p: 2,
+                  borderRadius: 2,
+                  backgroundColor: alpha('#f59e0b', 0.08),
+                  border: `1px solid ${alpha('#f59e0b', 0.2)}`,
+                }}
+              >
+                <Typography
+                  variant="caption"
+                  sx={{
+                    color: '#f59e0b',
+                    fontSize: '0.8125rem',
+                    lineHeight: 1.6,
+                    display: 'block',
+                    textAlign: 'center',
+                  }}
+                >
+                  ⚠️ ログインなしで診断する場合、データは保存されません。
+                  <br />
+                  過去の履歴やグラフの履歴は表示できません。
+                </Typography>
+              </Box>
             </Box>
           </CardContent>
         </Card>

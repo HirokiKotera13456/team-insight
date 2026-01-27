@@ -63,17 +63,28 @@ export const useAssessment = (uid: string | undefined): UseAssessmentResult => {
   }, [answers]);
 
   const handleSave = useCallback(async (navigateToResult = false) => {
-    if (!uid) return;
-
     try {
       setSaving(true);
       const scores = calculateScores();
-      await saveAxisScores(uid, scores);
-      setSnackbar({
-        open: true,
-        message: '診断結果を保存しました',
-        severity: 'success',
-      });
+      
+      if (uid) {
+        // ログインしている場合は保存
+        await saveAxisScores(uid, scores);
+        setSnackbar({
+          open: true,
+          message: '診断結果を保存しました',
+          severity: 'success',
+        });
+      } else {
+        // ログインしていない場合は保存せず、ローカルストレージに一時保存
+        localStorage.setItem('guest_assessment_scores', JSON.stringify(scores));
+        setSnackbar({
+          open: true,
+          message: '診断が完了しました（データは保存されていません）',
+          severity: 'info',
+        });
+      }
+      
       if (navigateToResult) {
         setTimeout(() => {
           router.push('/app/result');

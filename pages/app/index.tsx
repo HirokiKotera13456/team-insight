@@ -22,9 +22,23 @@ const AppIndex: React.FC = () => {
   const { scores, loading, error } = useAxisScores(user?.uid);
 
   return (
-    <ProtectedRoute>
+    <ProtectedRoute allowGuest>
       <AppLayout>
         <Box sx={{ width: '100%' }}>
+          {!user && (
+            <Alert 
+              severity="info" 
+              sx={{ 
+                borderRadius: 3, 
+                width: '100%', 
+                mb: 3,
+                backgroundColor: 'rgba(99, 102, 241, 0.08)',
+                border: '1px solid rgba(99, 102, 241, 0.2)',
+              }}
+            >
+              現在ログインしていません。診断結果は保存されず、過去の履歴やグラフの履歴は表示できません。
+            </Alert>
+          )}
           {loading ? (
             <LoadingState />
           ) : (

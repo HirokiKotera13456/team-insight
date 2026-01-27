@@ -28,7 +28,7 @@ const Assessment: React.FC = () => {
   const currentAxisName = getAxisName(currentQuestion.axis);
 
   return (
-    <ProtectedRoute>
+    <ProtectedRoute allowGuest>
       <FocusLayout>
         <ProgressHeader
           currentIndex={currentIndex}
