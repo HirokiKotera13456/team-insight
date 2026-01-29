@@ -13,7 +13,7 @@ import {
   Alert,
   alpha,
 } from '@mui/material';
-import { Google, Insights } from '@mui/icons-material';
+import { Google, Insights, GitHub, Description } from '@mui/icons-material';
 import { useAuth } from '@/hooks/useAuth';
 import { signInWithGoogle } from '@/lib/auth';
 import { saveUserData } from '@/lib/firestore';
@@ -388,9 +388,7 @@ const Login: React.FC = () => {
                     background: `linear-gradient(90deg, transparent, ${alpha('#94a3b8', 0.3)}, transparent)`,
                   }}
                 />
-                <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.875rem' }}>
-                  または
-                </Typography>
+         
                 <Box
                   sx={{
                     flex: 1,
@@ -431,30 +429,92 @@ const Login: React.FC = () => {
                 ログインなしで診断をする
               </Button>
 
-              {/* 注意書き */}
+
+
+              {/* READMEへのリンク */}
               <Box
                 sx={{
-                  mt: 2,
-                  p: 2,
-                  borderRadius: 2,
-                  backgroundColor: alpha('#f59e0b', 0.08),
-                  border: `1px solid ${alpha('#f59e0b', 0.2)}`,
+                  mt: 3,
+                  pt: 3,
+                  borderTop: `1px solid ${alpha('#94a3b8', 0.15)}`,
+                  width: '100%',
                 }}
               >
-                <Typography
-                  variant="caption"
+                <Box
+                  component="a"
+                  href={"https://github.com/HirokiKotera13456/insight/blob/develop/README.md"}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   sx={{
-                    color: '#f59e0b',
-                    fontSize: '0.8125rem',
-                    lineHeight: 1.6,
-                    display: 'block',
-                    textAlign: 'center',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 1.5,
+                    textDecoration: 'none',
+                    color: '#64748b',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    '&:hover': {
+                      color: '#6366f1',
+                      transform: 'translateY(-2px)',
+                    },
                   }}
                 >
-                  ⚠️ ログインなしで診断する場合、データは保存されません。
-                  <br />
-                  過去の履歴やグラフの履歴は表示できません。
-                </Typography>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 1,
+                      p: 1.5,
+                      borderRadius: 2,
+                      backgroundColor: alpha('#6366f1', 0.04),
+                      border: `1px solid ${alpha('#6366f1', 0.1)}`,
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      '&:hover': {
+                        backgroundColor: alpha('#6366f1', 0.08),
+                        borderColor: alpha('#6366f1', 0.2),
+                        boxShadow: `0 4px 12px ${alpha('#6366f1', 0.15)}`,
+                      },
+                    }}
+                  >
+                    <Description
+                      sx={{
+                        fontSize: 20,
+                        transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      }}
+                    />
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        fontWeight: 500,
+                        fontSize: '0.875rem',
+                        letterSpacing: '-0.01em',
+                      }}
+                    >
+                      このプロジェクトについて
+                    </Typography>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 0.5,
+                        ml: 0.5,
+                        opacity: 0.6,
+                        transition: 'all 0.3s',
+                      }}
+                    >
+                      <GitHub sx={{ fontSize: 16 }} />
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          fontSize: '0.75rem',
+                          fontWeight: 500,
+                        }}
+                      >
+                        README
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
               </Box>
             </Box>
           </CardContent>
