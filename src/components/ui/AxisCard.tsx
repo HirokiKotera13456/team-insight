@@ -1,37 +1,9 @@
 import React from 'react';
 import { Card, CardContent, Typography, Box, alpha } from '@mui/material';
-import { TrendingUp, Psychology, EventNote, Visibility } from '@mui/icons-material';
 import { getAxisLabel } from '@/utils/comments';
 import { getAxisTendencyLabel, getAxisWorkExample } from '@/utils/summary';
 import { AxisType } from '@/types';
-
-// 軸ごとのカラー定義とアイコン
-const axisConfig = {
-  energy: {
-    main: '#6366f1',
-    light: '#818cf8',
-    gradient: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
-    icon: TrendingUp,
-  },
-  thinking: {
-    main: '#8b5cf6',
-    light: '#a78bfa',
-    gradient: 'linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)',
-    icon: Psychology,
-  },
-  planning: {
-    main: '#06b6d4',
-    light: '#22d3ee',
-    gradient: 'linear-gradient(135deg, #06b6d4 0%, #10b981 100%)',
-    icon: EventNote,
-  },
-  vision: {
-    main: '#f59e0b',
-    light: '#fbbf24',
-    gradient: 'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)',
-    icon: Visibility,
-  },
-};
+import { axisColors } from '@/constants/axisColors';
 
 interface AxisCardProps {
   axis: AxisType;
@@ -43,8 +15,8 @@ export const AxisCard: React.FC<AxisCardProps> = ({ axis, score, axisName }) => 
   const tendencyLabel = getAxisTendencyLabel(axis, score);
   const workExample = getAxisWorkExample(axis, score);
   const labels = getAxisLabel(axis);
-  const config = axisConfig[axis];
-  const Icon = config.icon;
+  const config = axisColors[axis];
+  const IconComponent = config.icon as React.ComponentType<{ sx?: any }>;
 
   return (
     <Card
@@ -94,7 +66,7 @@ export const AxisCard: React.FC<AxisCardProps> = ({ axis, score, axisName }) => 
               flexShrink: 0,
             }}
           >
-            <Icon sx={{ color: config.main, fontSize: { xs: 16, sm: 18 } }} />
+            <IconComponent sx={{ color: config.main, fontSize: { xs: 16, sm: 18 } }} />
           </Box>
         </Box>
 

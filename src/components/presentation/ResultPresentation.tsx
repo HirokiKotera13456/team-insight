@@ -32,18 +32,11 @@ import {
   Cell,
   TooltipProps,
 } from 'recharts';
-import { AxisScores } from '@/types';
+import { AxisScores, SnackbarState } from '@/types';
 import { getAxisName, getAxisLabel, getAxisComments } from '@/utils/comments';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { LoadingState } from '@/components/ui/LoadingState';
-
-// 軸ごとのカラー定義
-const axisColors = {
-  energy: { main: '#6366f1', light: '#818cf8', gradient: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)' },
-  thinking: { main: '#8b5cf6', light: '#a78bfa', gradient: 'linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)' },
-  planning: { main: '#06b6d4', light: '#22d3ee', gradient: 'linear-gradient(135deg, #06b6d4 0%, #10b981 100%)' },
-  vision: { main: '#f59e0b', light: '#fbbf24', gradient: 'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)' },
-};
+import { axisColors } from '@/constants/axisColors';
 
 // カスタムツールチップ
 const CustomTooltip: React.FC<TooltipProps<number, string>> = ({ active, payload, label }) => {
@@ -78,7 +71,7 @@ export interface ResultPresentationProps {
   scores: AxisScores;
   isGuest: boolean;
   exporting: boolean;
-  snackbar: { open: boolean; message: string; severity: 'success' | 'error' };
+  snackbar: SnackbarState;
   onExportPDF: () => void;
   onCloseSnackbar: () => void;
 }

@@ -3,6 +3,7 @@ import { Box, Typography, Card, CardContent, Grid, Chip, alpha } from '@mui/mate
 import { TrendingUp, TrendingDown, Remove } from '@mui/icons-material';
 import { AssessmentHistory, AxisType } from '@/types';
 import { getAxisName } from '@/utils/comments';
+import { getAxisColor } from '@/constants/axisColors';
 
 interface ChangeIndicatorProps {
   history: AssessmentHistory[];
@@ -83,13 +84,6 @@ export const ChangeIndicator: React.FC<ChangeIndicatorProps> = ({ history }) => 
     }
   };
 
-  const axisColors = {
-    energy: '#6366f1',
-    thinking: '#8b5cf6',
-    planning: '#06b6d4',
-    vision: '#f59e0b',
-  };
-
   return (
     <Card>
       <CardContent>
@@ -105,8 +99,8 @@ export const ChangeIndicator: React.FC<ChangeIndicatorProps> = ({ history }) => 
                     p: 2,
                     borderRadius: 2,
                     border: '1px solid',
-                    borderColor: alpha(axisColors[change.axis], 0.2),
-                    backgroundColor: alpha(axisColors[change.axis], 0.05),
+                    borderColor: alpha(getAxisColor(change.axis), 0.2),
+                    backgroundColor: alpha(getAxisColor(change.axis), 0.05),
                   }}
                 >
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
@@ -131,7 +125,7 @@ export const ChangeIndicator: React.FC<ChangeIndicatorProps> = ({ history }) => 
                     <Typography variant="body2" color="text.secondary">
                       →
                     </Typography>
-                    <Typography variant="body1" fontWeight="bold" sx={{ color: axisColors[change.axis] }}>
+                    <Typography variant="body1" fontWeight="bold" sx={{ color: getAxisColor(change.axis) }}>
                       現在: {change.current}
                     </Typography>
                   </Box>

@@ -2,13 +2,13 @@ import { useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { saveAxisScores } from '@/lib/firestore';
 import { questions } from '@/data/questions';
-import { AxisScores, AxisType } from '@/types';
+import { AxisScores, AxisType, SnackbarState } from '@/types';
 
 interface UseAssessmentResult {
   currentIndex: number;
   answers: Record<string, number>;
   saving: boolean;
-  snackbar: { open: boolean; message: string; severity: 'success' | 'error' | 'info' | 'warning' };
+  snackbar: SnackbarState;
   setCurrentIndex: (index: number) => void;
   handleSliderChange: (questionId: string, value: number) => void;
   handleSave: (navigateToResult?: boolean) => Promise<void>;
@@ -27,7 +27,7 @@ export const useAssessment = (uid: string | undefined): UseAssessmentResult => {
     }, {} as Record<string, number>)
   );
   const [saving, setSaving] = useState(false);
-  const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: 'success' | 'error' | 'info' | 'warning' }>({
+  const [snackbar, setSnackbar] = useState<SnackbarState>({
     open: false,
     message: '',
     severity: 'success',

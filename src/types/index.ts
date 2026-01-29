@@ -36,3 +36,11 @@ export interface AssessmentHistory extends AxisScores {
   answeredAt: any; // Firestore Timestamp
   createdAt?: any;
 }
+
+export type SnackbarSeverity = 'success' | 'error' | 'info' | 'warning';
+
+export interface SnackbarState {
+  open: boolean;
+  message: string;
+  severity: SnackbarSeverity;
+}

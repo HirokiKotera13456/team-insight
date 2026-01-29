@@ -12,18 +12,11 @@ import {
 } from 'recharts';
 import { AssessmentHistory } from '@/types';
 import { getAxisName } from '@/utils/comments';
+import { getAxisColor } from '@/constants/axisColors';
 
 interface HistoryChartProps {
   history: AssessmentHistory[];
 }
-
-// 軸ごとのカラー定義
-const axisColors = {
-  energy: '#6366f1',
-  thinking: '#8b5cf6',
-  planning: '#06b6d4',
-  vision: '#f59e0b',
-};
 
 export const HistoryChart: React.FC<HistoryChartProps> = ({ history }) => {
   if (history.length === 0) {
@@ -127,7 +120,7 @@ export const HistoryChart: React.FC<HistoryChartProps> = ({ history }) => {
               <Line
                 type="monotone"
                 dataKey="energy"
-                stroke={axisColors.energy}
+                stroke={getAxisColor('energy')}
                 strokeWidth={2}
                 dot={{ r: 4 }}
                 activeDot={{ r: 6 }}
@@ -136,7 +129,7 @@ export const HistoryChart: React.FC<HistoryChartProps> = ({ history }) => {
               <Line
                 type="monotone"
                 dataKey="thinking"
-                stroke={axisColors.thinking}
+                stroke={getAxisColor('thinking')}
                 strokeWidth={2}
                 dot={{ r: 4 }}
                 activeDot={{ r: 6 }}
@@ -145,7 +138,7 @@ export const HistoryChart: React.FC<HistoryChartProps> = ({ history }) => {
               <Line
                 type="monotone"
                 dataKey="planning"
-                stroke={axisColors.planning}
+                stroke={getAxisColor('planning')}
                 strokeWidth={2}
                 dot={{ r: 4 }}
                 activeDot={{ r: 6 }}
@@ -154,7 +147,7 @@ export const HistoryChart: React.FC<HistoryChartProps> = ({ history }) => {
               <Line
                 type="monotone"
                 dataKey="vision"
-                stroke={axisColors.vision}
+                stroke={getAxisColor('vision')}
                 strokeWidth={2}
                 dot={{ r: 4 }}
                 activeDot={{ r: 6 }}

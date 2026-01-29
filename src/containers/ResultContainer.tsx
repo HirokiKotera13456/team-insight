@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { Box, Alert } from '@mui/material';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { WithLoadingAndError } from '@/components/layout/WithLoadingAndError';
 import { useAuth } from '@/hooks/useAuth';
 import { useAxisScores } from '@/hooks/useAxisScores';
 import { exportAsPDF } from '@/utils/export';
 import { ResultPresentation } from '@/components/presentation/ResultPresentation';
-import { LoadingState } from '@/components/ui/LoadingState';
+import { SnackbarState } from '@/types';
 
 export const ResultContainer: React.FC = () => {
   const { user } = useAuth();
   const { scores, loading, error: scoresError } = useAxisScores(user?.uid);
   const [exporting, setExporting] = useState(false);
-  const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: 'success' | 'error' }>({
+  const [snackbar, setSnackbar] = useState<SnackbarState>({
     open: false,
     message: '',
     severity: 'success',
@@ -40,30 +40,8 @@ export const ResultContainer: React.FC = () => {
     setSnackbar({ ...snackbar, open: false });
   };
 
-  if (loading) {
-    return (
-      <ProtectedRoute allowGuest>
-        <AppLayout>
-          <Box sx={{ width: '100%' }}>
-            <LoadingState />
-          </Box>
-        </AppLayout>
-      </ProtectedRoute>
-    );
-  }
-
-  if (error || !scores) {
-    return (
-      <ProtectedRoute allowGuest>
-        <AppLayout>
-          <Box sx={{ width: '100%' }}>
-            <Alert severity="error" sx={{ borderRadius: 3, width: '100%' }}>
-              {error || '診断結果が見つかりません'}
-            </Alert>
-          </Box>
-        </AppLayout>
-      </ProtectedRoute>
-    );
+  if (!scores) {
+    return null;
   }
 
   return (

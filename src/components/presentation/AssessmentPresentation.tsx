@@ -1,7 +1,7 @@
 import React from 'react';
 import { Snackbar, Alert } from '@mui/material';
 import { FocusLayout } from '@/components/layout/FocusLayout';
-import { Question } from '@/types';
+import { Question, SnackbarState } from '@/types';
 import { ProgressHeader } from '@/components/diagnosis/ProgressHeader';
 import { QuestionCard } from '@/components/diagnosis/QuestionCard';
 import { StepFooter } from '@/components/diagnosis/StepFooter';
@@ -13,7 +13,7 @@ export interface AssessmentPresentationProps {
   axisName: string;
   value: number;
   saving: boolean;
-  snackbar: { open: boolean; message: string; severity: 'success' | 'error' | 'info' | 'warning' };
+  snackbar: SnackbarState;
   onSliderChange: (value: number) => void;
   onPrevious: () => void;
   onNext: () => void;
