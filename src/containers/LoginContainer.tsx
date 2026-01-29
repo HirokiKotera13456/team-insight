@@ -12,11 +12,7 @@ export const LoginContainer: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  useEffect(() => {
-    if (!loading && user) {
-      router.push('/app');
-    }
-  }, [user, loading, router]);
+  // ログイン画面は常に表示するため、自動リダイレクトを削除
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -53,9 +49,7 @@ export const LoginContainer: React.FC = () => {
     setError(null);
   };
 
-  if (user) {
-    return null;
-  }
+  // ログイン済みユーザーでもログイン画面を表示
 
   return (
     <LoginPresentation
