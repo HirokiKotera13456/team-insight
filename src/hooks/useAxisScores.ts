@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getLatestAxisScores } from '@/lib/firestore';
 import { AxisScores } from '@/types';
 
@@ -14,7 +14,7 @@ export const useAxisScores = (uid: string | undefined): UseAxisScoresResult => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const loadScores = async () => {
+  const loadScores = useCallback(async () => {
     if (!uid) {
       // ログインしていない場合はローカルストレージから読み込む
       try {
@@ -46,11 +46,11 @@ export const useAxisScores = (uid: string | undefined): UseAxisScoresResult => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [uid]);
 
   useEffect(() => {
     loadScores();
-  }, [uid]);
+  }, [loadScores]);
 
   return {
     scores,

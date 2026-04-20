@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getAssessmentHistory } from '@/lib/firestore';
 import { AssessmentHistory } from '@/types';
 
@@ -17,7 +17,7 @@ export const useAssessmentHistory = (
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const loadHistory = async () => {
+  const loadHistory = useCallback(async () => {
     if (!uid) {
       setLoading(false);
       return;
@@ -34,11 +34,11 @@ export const useAssessmentHistory = (
     } finally {
       setLoading(false);
     }
-  };
+  }, [uid, limitCount]);
 
   useEffect(() => {
     loadHistory();
-  }, [uid, limitCount]);
+  }, [loadHistory]);
 
   return {
     history,
