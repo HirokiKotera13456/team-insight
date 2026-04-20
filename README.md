@@ -1,7 +1,5 @@
 # Work Insight
 
-[![CI](https://github.com/HirokiKotera13456/team-insight/actions/workflows/ci.yml/badge.svg)](https://github.com/HirokiKotera13456/team-insight/actions/workflows/ci.yml)
-
 **仕事上の行動・判断の傾向を4軸スコアで可視化する自己理解支援 Web アプリ**
 
 > 性格診断ではなく「仕事の進め方の傾向」を数値化するツールです。良し悪しの評価は行いません。
