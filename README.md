@@ -10,11 +10,9 @@
 
 ## スクリーンショット
 
-> ※ 画像は `docs/screenshots/` に配置してください
-
-| ダッシュボード | 診断画面 | 結果画面 |
-|---|---|---|
-| ![dashboard](docs/screenshots/dashboard.png) | ![assessment](docs/screenshots/assessment.png) | ![result](docs/screenshots/result.png) |
+| ログイン | ダッシュボード |
+|---|---|
+| ![ログイン画面](docs/screenshots/ログイン画面.png) | ![ダッシュボード画面](docs/screenshots/ダッシュボード画面.png) |
 
 ---
 
