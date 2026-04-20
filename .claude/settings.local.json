@@ -6,7 +6,8 @@
       "Bash(taskkill:*)",
       "Bash(cp:*)",
       "Bash(node -e:*)",
-      "Bash(git *)"
+      "Bash(git *)",
+      "Bash(npm test *)"
     ]
   }
 }
