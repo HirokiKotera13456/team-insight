@@ -26,6 +26,79 @@ npm run test:coverage
 npx jest src/components/ui/__tests__/HistoryChart.test.tsx
 ```
 
+## Project layout
+
+```
+team-insight/
+├── pages/                        # Next.js route entry points
+│   ├── _app.tsx                  # Global providers (Auth, Theme)
+│   ├── _document.tsx             # HTML shell; custom font loading
+│   ├── index.tsx                 # Redirects to /login
+│   └── app/                     # Authenticated pages
+│       ├── assessment.tsx
+│       ├── dashboard.tsx
+│       └── history.tsx
+├── src/
+│   ├── components/
+│   │   ├── layout/               # AppLayout, FocusLayout
+│   │   ├── presentation/         # Pure UI components (no state)
+│   │   └── ui/                   # Reusable widgets; __tests__/ inside
+│   ├── constants/                # Score labels, axis definitions; __tests__/ inside
+│   ├── containers/               # Page-level logic (composes hooks → Presentation)
+│   ├── contexts/                 # AuthContext; __tests__/ inside
+│   ├── data/                     # questions.ts (version-controlled)
+│   ├── hooks/                    # Data-fetching hooks; __tests__/ inside
+│   ├── lib/                      # Firebase init, Firestore helpers, auth; __tests__/ inside
+│   ├── theme/                    # MUI theme configuration
+│   ├── types/                    # Shared TypeScript types
+│   └── utils/                    # Pure helpers (comments, export, summary); __tests__/ inside
+├── firestore.rules               # Firestore security rules
+├── firebase.json                 # Firebase Hosting / Firestore config
+├── jest.config.js
+├── jest.setup.js
+└── next.config.js
+```
+
+## Testing
+
+Tests use **Jest + React Testing Library** with `jest-environment-jsdom`.
+
+### Where tests live
+
+Each module keeps its tests in a sibling `__tests__/` directory:
+
+```
+src/hooks/
+  useAssessment.ts
+  __tests__/
+    useAssessment.test.ts
+```
+
+Current test coverage spans:
+
+| Area | File |
+|---|---|
+| UI components | `src/components/ui/__tests__/` |
+| Auth context | `src/contexts/__tests__/AuthContext.test.tsx` |
+| Hooks | `src/hooks/__tests__/useAssessment`, `useAxisScores`, `useAssessmentHistory` |
+| Firestore helpers | `src/lib/__tests__/firestore.test.ts` |
+| Auth helpers | `src/lib/__tests__/auth.test.ts` |
+| Score constants | `src/constants/__tests__/scores.test.ts` |
+| Utility functions | `src/utils/__tests__/` |
+
+### Conventions
+
+- Firebase SDK is mocked via `jest.setup.js`; tests never hit real Firestore or Auth.
+- Path alias `@/` resolves to `src/` (configured in `jest.config.js` and `tsconfig.json`).
+- Coverage is collected from all `src/**/*.{ts,tsx}` except `*.d.ts` and `index.ts` re-exports.
+- `pages/` and `src/containers/` are **not** unit-tested — they are thin wiring layers covered implicitly by hook/component tests.
+
+### Adding a test
+
+1. Create `src/<layer>/__tests__/<filename>.test.ts(x)`.
+2. Mock Firebase where needed — follow the patterns in `src/lib/__tests__/firestore.test.ts`.
+3. Run `npm test` to verify all tests still pass.
+
 ## Architecture
 
 This is a **Next.js 14 static export** app hosted on Firebase Hosting. `output: 'export'` in `next.config.js` means there is no server-side rendering — all pages are pre-rendered as static HTML.
